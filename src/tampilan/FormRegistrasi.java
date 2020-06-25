@@ -5,49 +5,104 @@
  */
 package tampilan;
 
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.io.File;
+import java.io.IOException;
 import java.sql.*;
+import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import koneksi.koneksi;
+import org.apache.commons.io.FileUtils;
 
 /**
  *
  * @author BrownBox
  */
-public class FormRegistrasi extends javax.swing.JFrame {
+public final class FormRegistrasi extends javax.swing.JFrame {
     
-    private Connection conn = new koneksi().connect();
+    private final Connection conn = new koneksi().connect();
     private DefaultTableModel tabmode;
+    String id_anggota;
+    String lastCharacterId = "0";
+    File file;
+    JFileChooser jfc;
+    
     /**
      * Creates new form FormRegistrasi
      */
     public FormRegistrasi() {
         initComponents();
         datatable();
+        getNextIdAnggota();
     }
+    
 
-        protected void aktif(){
-        textfieldIDAnggota.setEnabled(true);
+    protected void aktif(){
         textfieldNama.setEnabled(true);
         textfieldNIS.setEnabled(true);
         textfieldNoTelepon.setEnabled(true);
         textfieldEmail.setEnabled(true);
-        textfieldNama.requestFocus();               
+        textfieldNamaFileFoto.setText("");
+        jLabelGambar.setIcon(null); 
+        textfieldNama.requestFocus();  
+        
     }
     protected void kosong(){
-        textfieldIDAnggota.setText("");
         textfieldNama.setText("");
         textfieldNIS.setText("");
         textfieldNoTelepon.setText("");
-        comboboxKelas.setSelectedIndex(0);
         textfieldEmail.setText("");
     }
+    public void getNextIdAnggota(){
+        String sql = "SELECT id_anggota FROM anggota ORDER BY id_anggota DESC LIMIT 1";
+        try{
+            java.sql.Statement stat = conn.createStatement();
+            ResultSet hasil = stat.executeQuery(sql);
+            while(hasil.next()){
+                id_anggota = hasil.getString("id_anggota");
+                System.out.println("id anggota terakhir : "+id_anggota);
+                lastCharacterId =  id_anggota.length() > 2 ? id_anggota.substring(id_anggota.length() -1) : id_anggota;
+                System.out.println("id anggota terakhir : "+id_anggota);
+                System.out.println("ambil 1 karakter terakhir id anggota terakhir : "+lastCharacterId);
+            }
+        }catch (SQLException e){
+                    
+        }
+                
+        // Untuk generate ID Anggota YYYYMMXX
+        // XX : Id terakhir
+        java.util.Date today = new java.util.Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(today);
+        System.out.println(today);
+        int dayOfMonth = cal.get(Calendar.MONTH)+1;
+        int dayOfYear = cal.get(Calendar.YEAR);
+        System.out.println("dayOfMonth :" + dayOfMonth);
+        System.out.println("dayOfYear :" + dayOfYear);
+        
+        int newId = Integer.parseInt(lastCharacterId) + 1;
+        System.out.println("getsubstring :" + newId);
+                
+        String month = Integer.toString(dayOfMonth);
+        String year = Integer.toString(dayOfYear);
+        String noIdAnggota = Integer.toString(newId);
+        
+        String IDAnggota = year+month+noIdAnggota;
+        textfieldIDAnggota.setText(IDAnggota);
+    }
+    
     protected void datatable(){
-        Object[] Baris = {"Id Anggota", "Nama", "NIS", "Kelas", 
+        Object[] Baris = {"ID Anggota", "Nama", "NIS", 
             "No Telepon", "Email"};
         tabmode = new DefaultTableModel(null, Baris);
         tableAnggota.setModel(tabmode);
-        String sql = "SELECT * FROM anggota";
+        String sql = "SELECT id_anggota, nama, nis, no_tlp, email FROM anggota";
         try{
             java.sql.Statement stat = conn.createStatement();
             ResultSet hasil = stat.executeQuery(sql);
@@ -55,14 +110,13 @@ public class FormRegistrasi extends javax.swing.JFrame {
                 String a = hasil.getString("id_anggota");                
                 String b = hasil.getString("nama");
                 String c = hasil.getString("nis");
-                String d = hasil.getString("kelas");
-                String e = hasil.getString("no_tlp");
-                String f = hasil.getString("email");
+                String d = hasil.getString("no_tlp");
+                String e = hasil.getString("email");
                 
-                String[] data={a, b, c, d, e, f};
+                String[] data={a, b, c, d, e};
                 tabmode.addRow(data);
             }
-        }catch (Exception e){
+        }catch (SQLException e){
                     
         }
     }
@@ -82,8 +136,6 @@ public class FormRegistrasi extends javax.swing.JFrame {
         textfieldNama = new javax.swing.JTextField();
         labelNIS = new javax.swing.JLabel();
         textfieldNIS = new javax.swing.JTextField();
-        labelKelas = new javax.swing.JLabel();
-        comboboxKelas = new javax.swing.JComboBox<>();
         labelNoTelepon = new javax.swing.JLabel();
         textfieldNoTelepon = new javax.swing.JTextField();
         labelEmail = new javax.swing.JLabel();
@@ -94,6 +146,10 @@ public class FormRegistrasi extends javax.swing.JFrame {
         buttonClear = new javax.swing.JButton();
         labelNama1 = new javax.swing.JLabel();
         textfieldIDAnggota = new javax.swing.JTextField();
+        labelKodeBuku = new javax.swing.JLabel();
+        jLabelGambar = new javax.swing.JLabel();
+        textfieldNamaFileFoto = new javax.swing.JTextField();
+        jButtonPilihFoto = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         buttonCari = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -116,16 +172,16 @@ public class FormRegistrasi extends javax.swing.JFrame {
         jPanel2.setPreferredSize(new java.awt.Dimension(300, 600));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        labelTitle1.setBackground(new java.awt.Color(71, 127, 255));
+        labelTitle1.setBackground(new java.awt.Color(9, 110, 59));
         labelTitle1.setFont(new java.awt.Font("Montserrat SemiBold", 1, 24)); // NOI18N
-        labelTitle1.setForeground(new java.awt.Color(71, 127, 255));
+        labelTitle1.setForeground(new java.awt.Color(9, 110, 59));
         labelTitle1.setText("Registrasi Anggota");
         jPanel2.add(labelTitle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
         labelNama.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
         labelNama.setForeground(new java.awt.Color(153, 153, 153));
         labelNama.setText("Nama");
-        jPanel2.add(labelNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
+        jPanel2.add(labelNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, -1, -1));
 
         textfieldNama.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
         textfieldNama.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 231, 232)));
@@ -139,7 +195,7 @@ public class FormRegistrasi extends javax.swing.JFrame {
         labelNIS.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
         labelNIS.setForeground(new java.awt.Color(153, 153, 153));
         labelNIS.setText("NIS");
-        jPanel2.add(labelNIS, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, -1, -1));
+        jPanel2.add(labelNIS, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 210, -1, -1));
 
         textfieldNIS.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
         textfieldNIS.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 231, 232)));
@@ -150,21 +206,10 @@ public class FormRegistrasi extends javax.swing.JFrame {
         });
         jPanel2.add(textfieldNIS, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 210, 230, -1));
 
-        labelKelas.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
-        labelKelas.setForeground(new java.awt.Color(153, 153, 153));
-        labelKelas.setText("Kelas");
-        jPanel2.add(labelKelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, -1, -1));
-
-        comboboxKelas.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
-        comboboxKelas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " X", " XI", " XII" }));
-        comboboxKelas.setBorder(null);
-        comboboxKelas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel2.add(comboboxKelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 260, 230, -1));
-
         labelNoTelepon.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
         labelNoTelepon.setForeground(new java.awt.Color(153, 153, 153));
         labelNoTelepon.setText("No Telepon");
-        jPanel2.add(labelNoTelepon, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, -1, -1));
+        jPanel2.add(labelNoTelepon, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, -1, -1));
 
         textfieldNoTelepon.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
         textfieldNoTelepon.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 231, 232)));
@@ -173,12 +218,12 @@ public class FormRegistrasi extends javax.swing.JFrame {
                 textfieldNoTeleponActionPerformed(evt);
             }
         });
-        jPanel2.add(textfieldNoTelepon, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 320, 230, -1));
+        jPanel2.add(textfieldNoTelepon, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 260, 230, -1));
 
         labelEmail.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
         labelEmail.setForeground(new java.awt.Color(153, 153, 153));
         labelEmail.setText("Email");
-        jPanel2.add(labelEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, -1, -1));
+        jPanel2.add(labelEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, -1, -1));
 
         textfieldEmail.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
         textfieldEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 231, 232)));
@@ -187,9 +232,9 @@ public class FormRegistrasi extends javax.swing.JFrame {
                 textfieldEmailActionPerformed(evt);
             }
         });
-        jPanel2.add(textfieldEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 370, 230, -1));
+        jPanel2.add(textfieldEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, 230, -1));
 
-        buttonSave.setBackground(new java.awt.Color(71, 127, 255));
+        buttonSave.setBackground(new java.awt.Color(9, 110, 59));
         buttonSave.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonSave.setForeground(new java.awt.Color(255, 255, 255));
         buttonSave.setText("Save");
@@ -200,9 +245,9 @@ public class FormRegistrasi extends javax.swing.JFrame {
                 buttonSaveActionPerformed(evt);
             }
         });
-        jPanel2.add(buttonSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 460, -1, -1));
+        jPanel2.add(buttonSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 510, -1, -1));
 
-        buttonEdit.setBackground(new java.awt.Color(71, 127, 255));
+        buttonEdit.setBackground(new java.awt.Color(9, 110, 59));
         buttonEdit.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonEdit.setForeground(new java.awt.Color(255, 255, 255));
         buttonEdit.setText("Edit");
@@ -213,9 +258,9 @@ public class FormRegistrasi extends javax.swing.JFrame {
                 buttonEditActionPerformed(evt);
             }
         });
-        jPanel2.add(buttonEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 460, 80, -1));
+        jPanel2.add(buttonEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 510, 80, -1));
 
-        buttonDelete.setBackground(new java.awt.Color(71, 127, 255));
+        buttonDelete.setBackground(new java.awt.Color(9, 110, 59));
         buttonDelete.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonDelete.setForeground(new java.awt.Color(255, 255, 255));
         buttonDelete.setText("Delete");
@@ -226,9 +271,9 @@ public class FormRegistrasi extends javax.swing.JFrame {
                 buttonDeleteActionPerformed(evt);
             }
         });
-        jPanel2.add(buttonDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 460, -1, -1));
+        jPanel2.add(buttonDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 510, -1, -1));
 
-        buttonClear.setBackground(new java.awt.Color(71, 127, 255));
+        buttonClear.setBackground(new java.awt.Color(9, 110, 59));
         buttonClear.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonClear.setForeground(new java.awt.Color(255, 255, 255));
         buttonClear.setText("Clear");
@@ -239,12 +284,12 @@ public class FormRegistrasi extends javax.swing.JFrame {
                 buttonClearActionPerformed(evt);
             }
         });
-        jPanel2.add(buttonClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 460, -1, -1));
+        jPanel2.add(buttonClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 510, -1, -1));
 
         labelNama1.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
         labelNama1.setForeground(new java.awt.Color(153, 153, 153));
         labelNama1.setText("ID Anggota");
-        jPanel2.add(labelNama1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
+        jPanel2.add(labelNama1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, -1, -1));
 
         textfieldIDAnggota.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
         textfieldIDAnggota.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 231, 232)));
@@ -255,12 +300,42 @@ public class FormRegistrasi extends javax.swing.JFrame {
         });
         jPanel2.add(textfieldIDAnggota, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 110, 230, -1));
 
+        labelKodeBuku.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
+        labelKodeBuku.setForeground(new java.awt.Color(153, 153, 153));
+        labelKodeBuku.setText("Foto");
+        jPanel2.add(labelKodeBuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 350, -1, -1));
+
+        jLabelGambar.setOpaque(true);
+        jPanel2.add(jLabelGambar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 350, 110, 130));
+
+        textfieldNamaFileFoto.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
+        textfieldNamaFileFoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 231, 232)));
+        textfieldNamaFileFoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textfieldNamaFileFotoActionPerformed(evt);
+            }
+        });
+        jPanel2.add(textfieldNamaFileFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 430, 110, -1));
+
+        jButtonPilihFoto.setBackground(new java.awt.Color(0, 153, 102));
+        jButtonPilihFoto.setFont(new java.awt.Font("Montserrat Medium", 0, 12)); // NOI18N
+        jButtonPilihFoto.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonPilihFoto.setText("Pilih Foto");
+        jButtonPilihFoto.setBorder(null);
+        jButtonPilihFoto.setPreferredSize(new java.awt.Dimension(75, 30));
+        jButtonPilihFoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPilihFotoActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButtonPilihFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 460, 110, 20));
+
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 420, 600));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        buttonCari.setBackground(new java.awt.Color(71, 127, 255));
+        buttonCari.setBackground(new java.awt.Color(9, 110, 59));
         buttonCari.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonCari.setForeground(new java.awt.Color(255, 255, 255));
         buttonCari.setText("Search");
@@ -291,11 +366,11 @@ public class FormRegistrasi extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tableAnggota);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 550, 350));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 550, 260));
 
-        labelTitle.setBackground(new java.awt.Color(71, 127, 255));
+        labelTitle.setBackground(new java.awt.Color(9, 110, 59));
         labelTitle.setFont(new java.awt.Font("Montserrat SemiBold", 1, 24)); // NOI18N
-        labelTitle.setForeground(new java.awt.Color(71, 127, 255));
+        labelTitle.setForeground(new java.awt.Color(9, 110, 59));
         labelTitle.setText("Daftar Anggota");
         jPanel1.add(labelTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
 
@@ -315,11 +390,11 @@ public class FormRegistrasi extends javax.swing.JFrame {
         });
         jPanel1.add(textfieldCariNamaAnggota, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 210, -1));
 
-        buttonCancel.setBackground(new java.awt.Color(255, 255, 255));
+        buttonCancel.setBackground(new java.awt.Color(9, 110, 59));
         buttonCancel.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
-        buttonCancel.setForeground(new java.awt.Color(71, 127, 255));
+        buttonCancel.setForeground(new java.awt.Color(9, 110, 59));
         buttonCancel.setText("Cancel");
-        buttonCancel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(71, 127, 255)));
+        buttonCancel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(9, 110, 59)));
         buttonCancel.setContentAreaFilled(false);
         buttonCancel.setPreferredSize(new java.awt.Dimension(75, 30));
         buttonCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -371,22 +446,30 @@ public class FormRegistrasi extends javax.swing.JFrame {
     private void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditActionPerformed
         // TODO add your handling code here
         try {
-            String sql = "UPDATE anggota SET nama=?, nis=?, kelas=?, no_tlp=?, email=? where id_anggota=?";
+            String sql = "UPDATE anggota SET nama=?, nis=?, no_tlp=?, email=?, foto_anggota=?"
+                    + " where id_anggota=?";
             PreparedStatement stat = conn.prepareStatement(sql);
             stat.setString(1, textfieldNama.getText());            
             stat.setString(2, textfieldNIS.getText());
-            stat.setString(3, comboboxKelas.getSelectedItem().toString());
-            stat.setString(4, textfieldNoTelepon.getText());
-            stat.setString(5, textfieldEmail.getText());
+            stat.setString(3, textfieldNoTelepon.getText());
+            stat.setString(4, textfieldEmail.getText());
+            stat.setString(5, textfieldNamaFileFoto.getText());
             stat.setString(6, textfieldIDAnggota.getText());
-            
-
-            
+           
             stat.executeUpdate();
             JOptionPane.showMessageDialog(null, "Data berhasil diubah");
+            
+            try {
+                String path=new File(".").getCanonicalPath();
+                FileUtils.copyFileToDirectory(file, new File(path+"/foto")); //copy file ke folder image
+            } catch (IOException ex) {
+                Logger.getLogger(FormInputBuku.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
             kosong();
-            textfieldIDAnggota.requestFocus();
+            textfieldNama.requestFocus();
             datatable();
+            getNextIdAnggota();
             
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Data Gagal Diubah "+e);
@@ -401,16 +484,24 @@ public class FormRegistrasi extends javax.swing.JFrame {
             stat.setString(1, textfieldIDAnggota.getText());            
             stat.setString(2, textfieldNama.getText());
             stat.setString(3, textfieldNIS.getText());
-            stat.setString(4, comboboxKelas.getSelectedItem().toString());
-            stat.setString(5, textfieldNoTelepon.getText());
-            stat.setString(6, textfieldEmail.getText());
+            stat.setString(4, textfieldNoTelepon.getText());
+            stat.setString(5, textfieldEmail.getText());
+            stat.setString(6, textfieldNamaFileFoto.getText());
 
-            
             stat.executeUpdate();
             JOptionPane.showMessageDialog(null, "Data Berhasil Disimpan");
+            
+            try {
+                String path=new File(".").getCanonicalPath();
+                FileUtils.copyFileToDirectory(file, new File(path+"/foto")); //copy file ke folder image
+            } catch (IOException ex) {
+                Logger.getLogger(FormInputBuku.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
             kosong();
-            textfieldIDAnggota.requestFocus();
+            textfieldNama.requestFocus();
             datatable();
+            getNextIdAnggota();
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Data Gagal Disimpan "+e);
         }
@@ -422,19 +513,46 @@ public class FormRegistrasi extends javax.swing.JFrame {
     private void tableAnggotaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableAnggotaMouseClicked
         // TODO add your handling code here:
         int bar = tableAnggota.getSelectedRow();        
-        String a = tabmode.getValueAt(bar, 0).toString();
-        String b = tabmode.getValueAt(bar, 1).toString();
-        String c = tabmode.getValueAt(bar, 2).toString();
-        String d = tabmode.getValueAt(bar, 3).toString();
-        String e = tabmode.getValueAt(bar, 4).toString();
-        String f = tabmode.getValueAt(bar, 5).toString();        
+        String idAnggota = tabmode.getValueAt(bar, 0).toString();
+        String sql = "SELECT * FROM anggota WHERE id_anggota='"+ idAnggota +"'";
+
+       try{
+            java.sql.Statement stat = conn.createStatement();
+            ResultSet hasil = stat.executeQuery(sql);
+            while(hasil.next()){
+                String a = hasil.getString("id_anggota");                
+                String b = hasil.getString("nama");
+                String c = hasil.getString("nis");
+                String d = hasil.getString("no_tlp");
+                String e = hasil.getString("email");
+                String f = hasil.getString("foto_anggota");
+                
+                textfieldIDAnggota.setText(a);          
+                textfieldNama.setText(b);
+                textfieldNIS.setText(c);
+                textfieldNoTelepon.setText(d);
+                textfieldEmail.setText(e);
+                textfieldNamaFileFoto.setText(f);
+
+                try {
+                    Toolkit toolkit=Toolkit.getDefaultToolkit();
+
+                    String path=new File(".").getCanonicalPath();
+
+                    Image image=toolkit.getImage(path+"/foto/"+f); //mengambil gambar dari folder foto
+                    Image imagedResized=image.getScaledInstance(140, 170, Image.SCALE_DEFAULT); //resize foto sesuai ukuran jlabel
+                    ImageIcon icon=new ImageIcon(imagedResized);
+                    jLabelGambar.setIcon(icon); // memasang gambar pada jlabel
+                }catch (IOException ex) {
+                            Logger.getLogger(FormInputBuku.class.getName()).log(Level.SEVERE, null, ex);
+                }    
         
-        textfieldIDAnggota.setText(a);
-        textfieldNama.setText(b);
-        textfieldNIS.setText(c);
-        comboboxKelas.setSelectedItem(d);
-        textfieldNoTelepon.setText(e);
-        textfieldEmail.setText(f);
+            }
+       }catch (SQLException e)     {
+            JOptionPane.showMessageDialog(null, "Check SQL "+e);
+
+       }   
+    
     }//GEN-LAST:event_tableAnggotaMouseClicked
 
     private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
@@ -448,8 +566,9 @@ public class FormRegistrasi extends javax.swing.JFrame {
                 stat.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Data Berhasil dihapus");
                 kosong();
-                textfieldIDAnggota.requestFocus();
+                textfieldNama.requestFocus();
                 datatable();
+                getNextIdAnggota();
             }catch(SQLException e){
                 JOptionPane.showMessageDialog(null, "Data gagal dihapus "+e);
             }
@@ -471,7 +590,7 @@ public class FormRegistrasi extends javax.swing.JFrame {
 
     private void buttonCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCariActionPerformed
         // TODO add your handling code here:
-        Object[] Baris = {"Id Anggota", "Nama", "NIS", "Kelas", 
+        Object[] Baris = {"Id Anggota", "Nama", "NIS", 
             "No Telepon", "Email"};
         tabmode = new DefaultTableModel(null, Baris);
         tableAnggota.setModel(tabmode);
@@ -483,14 +602,13 @@ public class FormRegistrasi extends javax.swing.JFrame {
                 String a = hasil.getString("id_anggota");                
                 String b = hasil.getString("nama");
                 String c = hasil.getString("nis");
-                String d = hasil.getString("kelas");
-                String e = hasil.getString("no_tlp");
-                String f = hasil.getString("email");
+                String d = hasil.getString("no_tlp");
+                String e = hasil.getString("email");
                 
-                String[] data={a, b, c, d, e, f};
+                String[] data={a, b, c, d, e};
                 tabmode.addRow(data);
             }
-        }catch (Exception e){
+        }catch (SQLException e){
                     
         }        
     }//GEN-LAST:event_buttonCariActionPerformed
@@ -506,6 +624,27 @@ public class FormRegistrasi extends javax.swing.JFrame {
         new FormMenuUtama().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_exitMouseClicked
+
+    private void textfieldNamaFileFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textfieldNamaFileFotoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textfieldNamaFileFotoActionPerformed
+
+    private void jButtonPilihFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPilihFotoActionPerformed
+        // TODO add your handling code here:
+        jfc = new JFileChooser();
+        if(jfc.showOpenDialog(jLabelGambar)==JFileChooser.APPROVE_OPTION){
+
+            Toolkit toolkit=Toolkit.getDefaultToolkit();
+            Image image=toolkit.getImage(jfc.getSelectedFile().getAbsolutePath());
+            Image imagedResized=image.getScaledInstance(140, 170, Image.SCALE_DEFAULT);
+            ImageIcon imageIcon=new ImageIcon(imagedResized);
+
+            jLabelGambar.setIcon(imageIcon);
+            textfieldNamaFileFoto.setText(jfc.getSelectedFile().getName());
+
+            file = new File(jfc.getSelectedFile().getPath()); // file untuk dikopi
+        }
+    }//GEN-LAST:event_jButtonPilihFotoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -552,15 +691,16 @@ public class FormRegistrasi extends javax.swing.JFrame {
     private javax.swing.JButton buttonDelete;
     private javax.swing.JButton buttonEdit;
     private javax.swing.JButton buttonSave;
-    private javax.swing.JComboBox<String> comboboxKelas;
     private javax.swing.JLabel exit;
+    private javax.swing.JButton jButtonPilihFoto;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelGambar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelEmail;
-    private javax.swing.JLabel labelKelas;
+    private javax.swing.JLabel labelKodeBuku;
     private javax.swing.JLabel labelNIS;
     private javax.swing.JLabel labelNama;
     private javax.swing.JLabel labelNama1;
@@ -574,6 +714,7 @@ public class FormRegistrasi extends javax.swing.JFrame {
     private javax.swing.JTextField textfieldIDAnggota;
     private javax.swing.JTextField textfieldNIS;
     private javax.swing.JTextField textfieldNama;
+    private javax.swing.JTextField textfieldNamaFileFoto;
     private javax.swing.JTextField textfieldNoTelepon;
     // End of variables declaration//GEN-END:variables
 }

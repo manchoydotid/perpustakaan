@@ -105,6 +105,7 @@ public final class FormMenuUtama extends javax.swing.JFrame {
         jMenuMaster = new javax.swing.JMenu();
         jMenuItemInputDataBuku = new javax.swing.JMenuItem();
         jMenuItemRegistrasiAnggota = new javax.swing.JMenuItem();
+        jMenuItemRegistrasiPetugas = new javax.swing.JMenuItem();
         jMenuTransaksi = new javax.swing.JMenu();
         jMenuLaporan = new javax.swing.JMenu();
         jMenuLogout = new javax.swing.JMenu();
@@ -329,6 +330,17 @@ public final class FormMenuUtama extends javax.swing.JFrame {
         });
         jMenuMaster.add(jMenuItemRegistrasiAnggota);
 
+        jMenuItemRegistrasiPetugas.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItemRegistrasiPetugas.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jMenuItemRegistrasiPetugas.setText("Registrasi Petugas");
+        jMenuItemRegistrasiPetugas.setPreferredSize(new java.awt.Dimension(280, 30));
+        jMenuItemRegistrasiPetugas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemRegistrasiPetugasActionPerformed(evt);
+            }
+        });
+        jMenuMaster.add(jMenuItemRegistrasiPetugas);
+
         jMenuBar1.add(jMenuMaster);
 
         jMenuTransaksi.setBackground(new java.awt.Color(255, 255, 255));
@@ -482,6 +494,12 @@ public final class FormMenuUtama extends javax.swing.JFrame {
         
     }//GEN-LAST:event_data_laporanMouseClicked
 
+    private void jMenuItemRegistrasiPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistrasiPetugasActionPerformed
+        // TODO add your handling code here:
+        new FormPetugas().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItemRegistrasiPetugasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -540,6 +558,7 @@ public final class FormMenuUtama extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemInputDataBuku;
     private javax.swing.JMenuItem jMenuItemLogout;
     private javax.swing.JMenuItem jMenuItemRegistrasiAnggota;
+    private javax.swing.JMenuItem jMenuItemRegistrasiPetugas;
     private javax.swing.JMenu jMenuLaporan;
     private javax.swing.JMenu jMenuLogout;
     private javax.swing.JMenu jMenuMaster;

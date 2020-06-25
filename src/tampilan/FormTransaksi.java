@@ -86,10 +86,10 @@ public class FormTransaksi extends javax.swing.JFrame {
     //Menampilkan data dari database ke table
     protected void datatable(){
         Object[] Baris = {"ID Transaksi", "Tgl Pinjam", "Tgl Kembali", "ID Anggota", 
-            "Nama", "Kode Buku", "Judul Buku", "Status"};
+            "Nama", "Kode Buku", "Judul Buku"};
         tabmode = new DefaultTableModel(null, Baris);
         tableTransaksiPeminjamanBuku.setModel(tabmode);
-        String sql = "SELECT * FROM transaksi";
+        String sql = "SELECT * FROM transaksi WHERE status='dipinjam'";
         try{
             java.sql.Statement stat = conn.createStatement();
             ResultSet hasil = stat.executeQuery(sql);
@@ -122,13 +122,11 @@ public class FormTransaksi extends javax.swing.JFrame {
         labelKodeBuku1 = new javax.swing.JLabel();
         labelKodeBuku2 = new javax.swing.JLabel();
         labelKodeBuku6 = new javax.swing.JLabel();
-        dateChooserTglPinjam = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableTransaksiPeminjamanBuku = new javax.swing.JTable();
         buttonClear = new javax.swing.JButton();
         buttonSimpan = new javax.swing.JButton();
         buttonHapus = new javax.swing.JButton();
-        dateChooserTglKembali = new com.toedter.calendar.JDateChooser();
         labelKodeBuku3 = new javax.swing.JLabel();
         labelTitle1 = new javax.swing.JLabel();
         panelAnggota1 = new javax.swing.JPanel();
@@ -160,6 +158,8 @@ public class FormTransaksi extends javax.swing.JFrame {
         labelTerlambat1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         labelKodeBuku15 = new javax.swing.JLabel();
+        dateChooserTglKembali = new com.toedter.calendar.JDateChooser();
+        dateChooserTglPinjam = new com.toedter.calendar.JDateChooser();
         jPanel3 = new javax.swing.JPanel();
         exit = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -199,15 +199,6 @@ public class FormTransaksi extends javax.swing.JFrame {
         labelKodeBuku6.setText("Data Buku");
         jPanel1.add(labelKodeBuku6, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 190, -1, 20));
 
-        dateChooserTglPinjam.setBackground(new java.awt.Color(255, 255, 255));
-        dateChooserTglPinjam.setDoubleBuffered(false);
-        dateChooserTglPinjam.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                dateChooserTglPinjamPropertyChange(evt);
-            }
-        });
-        jPanel1.add(dateChooserTglPinjam, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 140, 170, 30));
-
         tableTransaksiPeminjamanBuku.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -239,7 +230,7 @@ public class FormTransaksi extends javax.swing.JFrame {
                 buttonClearActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 560, 80, -1));
+        jPanel1.add(buttonClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 550, 80, -1));
 
         buttonSimpan.setBackground(new java.awt.Color(71, 127, 255));
         buttonSimpan.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
@@ -252,7 +243,7 @@ public class FormTransaksi extends javax.swing.JFrame {
                 buttonSimpanActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 560, 90, -1));
+        jPanel1.add(buttonSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 550, 90, -1));
 
         buttonHapus.setBackground(new java.awt.Color(71, 127, 255));
         buttonHapus.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
@@ -265,15 +256,7 @@ public class FormTransaksi extends javax.swing.JFrame {
                 buttonHapusActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 560, 80, -1));
-
-        dateChooserTglKembali.setBackground(new java.awt.Color(255, 255, 255));
-        dateChooserTglKembali.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                dateChooserTglKembaliPropertyChange(evt);
-            }
-        });
-        jPanel1.add(dateChooserTglKembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 140, 170, 30));
+        jPanel1.add(buttonHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 550, 80, -1));
 
         labelKodeBuku3.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
         labelKodeBuku3.setForeground(new java.awt.Color(153, 153, 153));
@@ -469,6 +452,8 @@ public class FormTransaksi extends javax.swing.JFrame {
         labelKodeBuku15.setForeground(new java.awt.Color(153, 153, 153));
         labelKodeBuku15.setText("ID Transaksi");
         jPanel1.add(labelKodeBuku15, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, -1, 20));
+        jPanel1.add(dateChooserTglKembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 140, 150, -1));
+        jPanel1.add(dateChooserTglPinjam, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 140, 150, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 28, -1, 590));
 
@@ -578,6 +563,8 @@ public class FormTransaksi extends javax.swing.JFrame {
                 stat.setString(5, labelNama.getText());
                 stat.setString(6, textfieldKodeBuku.getText()); 
                 stat.setString(7, labelJudulBuku.getText());
+                stat.setString(8, "0");
+                stat.setString(9, "dipinjam");
                 
                 stat.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Data Transaksi Berhasil Disimpan");

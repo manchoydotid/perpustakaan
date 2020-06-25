@@ -25,7 +25,7 @@ public class FormLogin extends javax.swing.JFrame {
     }
     private void loginMethod(){
         try{
-            String sql = "SELECT * FROM login WHERE "
+            String sql = "SELECT * FROM petugas WHERE "
                     + "username='"+textfieldUsername.getText()
                     + "' AND password='"+jPasswordField.getText()+"'";
             
@@ -40,7 +40,7 @@ public class FormLogin extends javax.swing.JFrame {
                     this.dispose();
                 }
             }else{
-                JOptionPane.showMessageDialog(null, "username atau password salah");
+                JOptionPane.showMessageDialog(null, "Username atau Password Salah!");
             }
         }catch(Exception e){
             JOptionPane.showMessageDialog(this, e.getMessage());
@@ -64,7 +64,6 @@ public class FormLogin extends javax.swing.JFrame {
         buttonLogin = new javax.swing.JButton();
         buttonCancel = new javax.swing.JButton();
         jPasswordField = new javax.swing.JPasswordField();
-        labelUsername1 = new javax.swing.JLabel();
         labelUsername3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -76,9 +75,9 @@ public class FormLogin extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setBackground(new java.awt.Color(71, 127, 255));
+        jLabel1.setBackground(new java.awt.Color(9, 110, 59));
         jLabel1.setFont(new java.awt.Font("Montserrat SemiBold", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(71, 127, 255));
+        jLabel1.setForeground(new java.awt.Color(9, 110, 59));
         jLabel1.setText("Hi!");
         jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, -1, -1));
 
@@ -102,11 +101,11 @@ public class FormLogin extends javax.swing.JFrame {
         });
         jPanel3.add(textfieldUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 220, 250, 30));
 
-        buttonLogin.setBackground(new java.awt.Color(71, 127, 255));
+        buttonLogin.setBackground(new java.awt.Color(9, 110, 59));
         buttonLogin.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
         buttonLogin.setForeground(new java.awt.Color(255, 255, 255));
         buttonLogin.setText("LOGIN");
-        buttonLogin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(71, 127, 255)));
+        buttonLogin.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         buttonLogin.setBorderPainted(false);
         buttonLogin.setMaximumSize(new java.awt.Dimension(70, 30));
         buttonLogin.setMinimumSize(new java.awt.Dimension(70, 30));
@@ -125,9 +124,9 @@ public class FormLogin extends javax.swing.JFrame {
 
         buttonCancel.setBackground(new java.awt.Color(255, 255, 255));
         buttonCancel.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
-        buttonCancel.setForeground(new java.awt.Color(75, 131, 255));
+        buttonCancel.setForeground(new java.awt.Color(9, 110, 59));
         buttonCancel.setText("CANCEL");
-        buttonCancel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(75, 131, 255), 1, true));
+        buttonCancel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(9, 110, 59), 1, true));
         buttonCancel.setContentAreaFilled(false);
         buttonCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -145,16 +144,6 @@ public class FormLogin extends javax.swing.JFrame {
         });
         jPanel3.add(jPasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 300, 250, 30));
 
-        labelUsername1.setFont(new java.awt.Font("Montserrat Medium", 0, 12)); // NOI18N
-        labelUsername1.setForeground(new java.awt.Color(190, 192, 205));
-        labelUsername1.setText("Lupa Password");
-        labelUsername1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelUsername1MouseClicked(evt);
-            }
-        });
-        jPanel3.add(labelUsername1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 340, -1, -1));
-
         labelUsername3.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         labelUsername3.setForeground(new java.awt.Color(190, 192, 205));
         labelUsername3.setText("Masukan username dan password.");
@@ -162,7 +151,7 @@ public class FormLogin extends javax.swing.JFrame {
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 0, 560, 600));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tampilan/images/cover1.jpg"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tampilan/images/cover.jpg"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -205,13 +194,6 @@ public class FormLogin extends javax.swing.JFrame {
             loginMethod();
         }        
     }//GEN-LAST:event_buttonLoginKeyPressed
-
-    private void labelUsername1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelUsername1MouseClicked
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Please contact your administrator! \nadmin@perpustakaansmk22.sch.id");
-        
-        
-    }//GEN-LAST:event_labelUsername1MouseClicked
 
     private void jPasswordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordFieldKeyPressed
         // TODO add your handling code here:
@@ -280,7 +262,6 @@ public class FormLogin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPasswordField jPasswordField;
     private javax.swing.JLabel labelUsername;
-    private javax.swing.JLabel labelUsername1;
     private javax.swing.JLabel labelUsername2;
     private javax.swing.JLabel labelUsername3;
     private javax.swing.JTextField textfieldUsername;

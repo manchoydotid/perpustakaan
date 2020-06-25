@@ -5,18 +5,29 @@
  */
 package tampilan;
 
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.io.File;
+import java.io.IOException;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import koneksi.koneksi;
+import org.apache.commons.io.FileUtils;
 
 /**
  *
  * @author BrownBox
  */
 public class FormInputBuku extends javax.swing.JFrame {
-    private Connection conn = new koneksi().connect();
+    private final Connection conn = new koneksi().connect();
     private DefaultTableModel tabmode;
+    File file;
+    JFileChooser jfc;
 
     /**
      * Creates new form FormRegistrasi
@@ -32,8 +43,7 @@ public class FormInputBuku extends javax.swing.JFrame {
         textfieldPengarang.setEnabled(true);
         textfieldPenerbit.setEnabled(true);
         textfieldTahunTerbit.setEnabled(true);
-        textfieldEdisi.setEnabled(true);
-        textfieldISBN.setEnabled(true);
+        textfieldKodeRak.setEnabled(true);
         textfieldJumlah.setEnabled(true);
         textfieldKodeBuku.requestFocus();               
     }
@@ -44,33 +54,33 @@ public class FormInputBuku extends javax.swing.JFrame {
         textfieldPengarang.setText("");
         textfieldPenerbit.setText("");
         textfieldTahunTerbit.setText("");
-        textfieldEdisi.setText("");
-        textfieldISBN.setText("");
+        textfieldKodeRak.setText("");
         textfieldJumlah.setText("");
+        textfieldNamaFileBuku.setText("");
+        jLabelGambar.setIcon(null); 
     }
     protected void datatable(){
-        Object[] Baris = {"Kategori", "Kode Buku", "Judul", "Pengarang", 
-            "Penerbit", "Tahun Terbit", "Edisi", "ISBN", "Jumlah"};
+        Object[] Baris = {"Kode Buku", "Judul", "Pengarang", 
+            "Penerbit", "Jumlah"};
         tabmode = new DefaultTableModel(null, Baris);
         tableBuku.setModel(tabmode);
-        String sql = "SELECT * FROM buku";
+        String sql = "SELECT kode_buku, judul_buku, pengarang, penerbit, "
+                + "jumlah FROM buku";
         try{
             java.sql.Statement stat = conn.createStatement();
             ResultSet hasil = stat.executeQuery(sql);
             while(hasil.next()){
-                String a = hasil.getString("kategori_buku");
-                String b = hasil.getString("kode_buku");
-                String c = hasil.getString("judul_buku");
-                String d = hasil.getString("pengarang");
-                String e = hasil.getString("penerbit");
-                String f = hasil.getString("tahun_terbit");
-                String g = hasil.getString("edisi");
-                String h = hasil.getString("isbn");
-                String i = hasil.getString("jumlah");
-                String[] data={a, b, c, d, e, f, g, h, i};
+                String a = hasil.getString("kode_buku");
+                String b = hasil.getString("judul_buku");
+                String c = hasil.getString("pengarang");
+                String d = hasil.getString("penerbit");
+                String e = hasil.getString("jumlah");
+
+                String[] data={a, b, c, d, e};
                 tabmode.addRow(data);
+
             }
-        }catch (Exception e){                  
+        }catch (SQLException e){                  
         }
     }
     
@@ -97,9 +107,7 @@ public class FormInputBuku extends javax.swing.JFrame {
         labelTahunTerbit = new javax.swing.JLabel();
         textfieldTahunTerbit = new javax.swing.JTextField();
         labelEdisi = new javax.swing.JLabel();
-        textfieldEdisi = new javax.swing.JTextField();
-        labelISBN = new javax.swing.JLabel();
-        textfieldISBN = new javax.swing.JTextField();
+        textfieldKodeRak = new javax.swing.JTextField();
         labelJumlah = new javax.swing.JLabel();
         textfieldJumlah = new javax.swing.JTextField();
         buttonSave = new javax.swing.JButton();
@@ -107,6 +115,10 @@ public class FormInputBuku extends javax.swing.JFrame {
         buttonDelete = new javax.swing.JButton();
         buttonClear = new javax.swing.JButton();
         labelTitle2 = new javax.swing.JLabel();
+        labelKodeBuku1 = new javax.swing.JLabel();
+        jButtonPilihGambar = new javax.swing.JButton();
+        jLabelGambar = new javax.swing.JLabel();
+        textfieldNamaFileBuku = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableBuku = new javax.swing.JTable();
@@ -122,7 +134,6 @@ public class FormInputBuku extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Input Data Buku");
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1000, 630));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -137,12 +148,12 @@ public class FormInputBuku extends javax.swing.JFrame {
         comboboxKategoriBuku.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
         comboboxKategoriBuku.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " Umum", " Agama", " Sosial", " Teknologi", " Bahasa", " Sains & Matematika", " Seni", " Sejarah", " Sastra" }));
         comboboxKategoriBuku.setBorder(null);
-        jPanel2.add(comboboxKategoriBuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, 230, -1));
+        jPanel2.add(comboboxKategoriBuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, 170, -1));
 
         labelKodeBuku.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
         labelKodeBuku.setForeground(new java.awt.Color(153, 153, 153));
-        labelKodeBuku.setText("Kode Buku");
-        jPanel2.add(labelKodeBuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
+        labelKodeBuku.setText("Gambar");
+        jPanel2.add(labelKodeBuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 140, -1, -1));
 
         textfieldKodeBuku.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
         textfieldKodeBuku.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 231, 232)));
@@ -151,12 +162,12 @@ public class FormInputBuku extends javax.swing.JFrame {
                 textfieldKodeBukuActionPerformed(evt);
             }
         });
-        jPanel2.add(textfieldKodeBuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 230, -1));
+        jPanel2.add(textfieldKodeBuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 170, 170, -1));
 
         labelJudul.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
         labelJudul.setForeground(new java.awt.Color(153, 153, 153));
         labelJudul.setText("Judul");
-        jPanel2.add(labelJudul, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
+        jPanel2.add(labelJudul, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, -1, -1));
 
         textfieldJudul.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
         textfieldJudul.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 231, 232)));
@@ -165,12 +176,12 @@ public class FormInputBuku extends javax.swing.JFrame {
                 textfieldJudulActionPerformed(evt);
             }
         });
-        jPanel2.add(textfieldJudul, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, 230, -1));
+        jPanel2.add(textfieldJudul, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 210, 170, -1));
 
         labelPengarang.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
         labelPengarang.setForeground(new java.awt.Color(153, 153, 153));
         labelPengarang.setText("Pengarang");
-        jPanel2.add(labelPengarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
+        jPanel2.add(labelPengarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, -1, -1));
 
         textfieldPengarang.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
         textfieldPengarang.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 231, 232)));
@@ -179,12 +190,12 @@ public class FormInputBuku extends javax.swing.JFrame {
                 textfieldPengarangActionPerformed(evt);
             }
         });
-        jPanel2.add(textfieldPengarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, 230, -1));
+        jPanel2.add(textfieldPengarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 250, 170, -1));
 
         labelPenerbit.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
         labelPenerbit.setForeground(new java.awt.Color(153, 153, 153));
         labelPenerbit.setText("Penerbit");
-        jPanel2.add(labelPenerbit, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, -1, -1));
+        jPanel2.add(labelPenerbit, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, -1, -1));
 
         textfieldPenerbit.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
         textfieldPenerbit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 231, 232)));
@@ -193,12 +204,12 @@ public class FormInputBuku extends javax.swing.JFrame {
                 textfieldPenerbitActionPerformed(evt);
             }
         });
-        jPanel2.add(textfieldPenerbit, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 290, 230, -1));
+        jPanel2.add(textfieldPenerbit, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 290, 170, -1));
 
         labelTahunTerbit.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
         labelTahunTerbit.setForeground(new java.awt.Color(153, 153, 153));
         labelTahunTerbit.setText("Tahun Terbit");
-        jPanel2.add(labelTahunTerbit, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, -1, -1));
+        jPanel2.add(labelTahunTerbit, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, -1, -1));
 
         textfieldTahunTerbit.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
         textfieldTahunTerbit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 231, 232)));
@@ -207,40 +218,26 @@ public class FormInputBuku extends javax.swing.JFrame {
                 textfieldTahunTerbitActionPerformed(evt);
             }
         });
-        jPanel2.add(textfieldTahunTerbit, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 340, 230, -1));
+        jPanel2.add(textfieldTahunTerbit, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 330, 170, -1));
 
         labelEdisi.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
         labelEdisi.setForeground(new java.awt.Color(153, 153, 153));
-        labelEdisi.setText("Edisi");
-        jPanel2.add(labelEdisi, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, -1, -1));
+        labelEdisi.setText("Kode Rak");
+        jPanel2.add(labelEdisi, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, -1, -1));
 
-        textfieldEdisi.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
-        textfieldEdisi.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 231, 232)));
-        textfieldEdisi.addActionListener(new java.awt.event.ActionListener() {
+        textfieldKodeRak.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
+        textfieldKodeRak.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 231, 232)));
+        textfieldKodeRak.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textfieldEdisiActionPerformed(evt);
+                textfieldKodeRakActionPerformed(evt);
             }
         });
-        jPanel2.add(textfieldEdisi, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 380, 230, -1));
-
-        labelISBN.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
-        labelISBN.setForeground(new java.awt.Color(153, 153, 153));
-        labelISBN.setText("ISBN");
-        jPanel2.add(labelISBN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 430, -1, -1));
-
-        textfieldISBN.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
-        textfieldISBN.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 231, 232)));
-        textfieldISBN.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textfieldISBNActionPerformed(evt);
-            }
-        });
-        jPanel2.add(textfieldISBN, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 430, 230, -1));
+        jPanel2.add(textfieldKodeRak, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 370, 170, -1));
 
         labelJumlah.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
         labelJumlah.setForeground(new java.awt.Color(153, 153, 153));
         labelJumlah.setText("Jumlah");
-        jPanel2.add(labelJumlah, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, -1, -1));
+        jPanel2.add(labelJumlah, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 410, -1, -1));
 
         textfieldJumlah.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
         textfieldJumlah.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 231, 232)));
@@ -249,9 +246,9 @@ public class FormInputBuku extends javax.swing.JFrame {
                 textfieldJumlahActionPerformed(evt);
             }
         });
-        jPanel2.add(textfieldJumlah, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 470, 230, -1));
+        jPanel2.add(textfieldJumlah, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 410, 170, -1));
 
-        buttonSave.setBackground(new java.awt.Color(71, 127, 255));
+        buttonSave.setBackground(new java.awt.Color(9, 110, 59));
         buttonSave.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonSave.setForeground(new java.awt.Color(255, 255, 255));
         buttonSave.setText("Save");
@@ -262,9 +259,9 @@ public class FormInputBuku extends javax.swing.JFrame {
                 buttonSaveActionPerformed(evt);
             }
         });
-        jPanel2.add(buttonSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 540, -1, -1));
+        jPanel2.add(buttonSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 470, -1, -1));
 
-        buttonEdit.setBackground(new java.awt.Color(71, 127, 255));
+        buttonEdit.setBackground(new java.awt.Color(9, 110, 59));
         buttonEdit.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonEdit.setForeground(new java.awt.Color(255, 255, 255));
         buttonEdit.setText("Edit");
@@ -275,9 +272,9 @@ public class FormInputBuku extends javax.swing.JFrame {
                 buttonEditActionPerformed(evt);
             }
         });
-        jPanel2.add(buttonEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 540, 80, -1));
+        jPanel2.add(buttonEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 470, 80, -1));
 
-        buttonDelete.setBackground(new java.awt.Color(71, 127, 255));
+        buttonDelete.setBackground(new java.awt.Color(9, 110, 59));
         buttonDelete.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonDelete.setForeground(new java.awt.Color(255, 255, 255));
         buttonDelete.setText("Delete");
@@ -288,9 +285,9 @@ public class FormInputBuku extends javax.swing.JFrame {
                 buttonDeleteActionPerformed(evt);
             }
         });
-        jPanel2.add(buttonDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 540, -1, -1));
+        jPanel2.add(buttonDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 470, -1, -1));
 
-        buttonClear.setBackground(new java.awt.Color(71, 127, 255));
+        buttonClear.setBackground(new java.awt.Color(9, 110, 59));
         buttonClear.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonClear.setForeground(new java.awt.Color(255, 255, 255));
         buttonClear.setText("Clear");
@@ -301,15 +298,45 @@ public class FormInputBuku extends javax.swing.JFrame {
                 buttonClearActionPerformed(evt);
             }
         });
-        jPanel2.add(buttonClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 540, -1, -1));
+        jPanel2.add(buttonClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 470, -1, -1));
 
         labelTitle2.setBackground(new java.awt.Color(71, 127, 255));
         labelTitle2.setFont(new java.awt.Font("Montserrat SemiBold", 1, 24)); // NOI18N
-        labelTitle2.setForeground(new java.awt.Color(71, 127, 255));
+        labelTitle2.setForeground(new java.awt.Color(9, 110, 59));
         labelTitle2.setText("Input Data Buku");
-        jPanel2.add(labelTitle2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, -1));
+        jPanel2.add(labelTitle2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 420, 600));
+        labelKodeBuku1.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
+        labelKodeBuku1.setForeground(new java.awt.Color(153, 153, 153));
+        labelKodeBuku1.setText("Kode Buku");
+        jPanel2.add(labelKodeBuku1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, -1));
+
+        jButtonPilihGambar.setBackground(new java.awt.Color(9, 110, 59));
+        jButtonPilihGambar.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jButtonPilihGambar.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonPilihGambar.setText("Pilih Gambar");
+        jButtonPilihGambar.setBorder(null);
+        jButtonPilihGambar.setPreferredSize(new java.awt.Dimension(75, 30));
+        jButtonPilihGambar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPilihGambarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButtonPilihGambar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 380, 110, -1));
+
+        jLabelGambar.setOpaque(true);
+        jPanel2.add(jLabelGambar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 170, 140, 170));
+
+        textfieldNamaFileBuku.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
+        textfieldNamaFileBuku.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 231, 232)));
+        textfieldNamaFileBuku.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textfieldNamaFileBukuActionPerformed(evt);
+            }
+        });
+        jPanel2.add(textfieldNamaFileBuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 350, 140, -1));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 510, 570));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -332,18 +359,18 @@ public class FormInputBuku extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tableBuku);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 143, 540, 380));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 143, 450, 380));
 
         labelTitle3.setFont(new java.awt.Font("Montserrat SemiBold", 1, 24)); // NOI18N
-        labelTitle3.setForeground(new java.awt.Color(71, 127, 255));
+        labelTitle3.setForeground(new java.awt.Color(9, 110, 59));
         labelTitle3.setText("Daftar Buku");
-        jPanel1.add(labelTitle3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, -1));
+        jPanel1.add(labelTitle3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         labelNama2.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
         labelNama2.setForeground(new java.awt.Color(153, 153, 153));
-        labelNama2.setText("Judul Buku");
+        labelNama2.setText("Masukan Judul Buku");
         labelNama2.setPreferredSize(new java.awt.Dimension(84, 30));
-        jPanel1.add(labelNama2, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 100, 130, -1));
+        jPanel1.add(labelNama2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 280, -1));
 
         textfieldCariJudulBuku.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
         textfieldCariJudulBuku.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 231, 232)));
@@ -353,9 +380,9 @@ public class FormInputBuku extends javax.swing.JFrame {
                 textfieldCariJudulBukuActionPerformed(evt);
             }
         });
-        jPanel1.add(textfieldCariJudulBuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 210, -1));
+        jPanel1.add(textfieldCariJudulBuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 280, -1));
 
-        buttonCari.setBackground(new java.awt.Color(71, 127, 255));
+        buttonCari.setBackground(new java.awt.Color(9, 110, 59));
         buttonCari.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonCari.setForeground(new java.awt.Color(255, 255, 255));
         buttonCari.setText("Search");
@@ -366,11 +393,11 @@ public class FormInputBuku extends javax.swing.JFrame {
                 buttonCariActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonCari, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, -1, -1));
+        jPanel1.add(buttonCari, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 100, -1, -1));
 
-        buttonCancel.setBackground(new java.awt.Color(255, 255, 255));
+        buttonCancel.setBackground(new java.awt.Color(9, 110, 59));
         buttonCancel.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
-        buttonCancel.setForeground(new java.awt.Color(71, 127, 255));
+        buttonCancel.setForeground(new java.awt.Color(9, 110, 59));
         buttonCancel.setText("Cancel");
         buttonCancel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(71, 127, 255)));
         buttonCancel.setContentAreaFilled(false);
@@ -380,9 +407,9 @@ public class FormInputBuku extends javax.swing.JFrame {
                 buttonCancelActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 100, -1, -1));
+        jPanel1.add(buttonCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 30, 580, 600));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 500, 570));
 
         jPanel3.setBackground(new java.awt.Color(212, 210, 212));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -425,20 +452,28 @@ public class FormInputBuku extends javax.swing.JFrame {
         // TODO add your handling code here
         try {
             String sql = "UPDATE buku SET kategori_buku=?, judul_buku=?, pengarang=?, "
-                    + "penerbit=?, tahun_terbit=?, edisi=?, isbn=?, jumlah=? where kode_buku=?";
+                    + "penerbit=?, tahun_terbit=?, kode_rak=?, jumlah=?, image=? where kode_buku=?";
             PreparedStatement stat = conn.prepareStatement(sql);
             stat.setString(1, comboboxKategoriBuku.getSelectedItem().toString());
             stat.setString(2, textfieldJudul.getText());
             stat.setString(3, textfieldPengarang.getText());
             stat.setString(4, textfieldPenerbit.getText());
             stat.setString(5, textfieldTahunTerbit.getText());
-            stat.setString(6, textfieldEdisi.getText());
-            stat.setString(7, textfieldISBN.getText());
-            stat.setString(8, textfieldJumlah.getText());
+            stat.setString(6, textfieldKodeRak.getText());
+            stat.setString(7, textfieldJumlah.getText());
+            stat.setString(8, textfieldNamaFileBuku.getText());
             stat.setString(9, textfieldKodeBuku.getText());
                     
             stat.executeUpdate();
             JOptionPane.showMessageDialog(null, "Data berhasil diubah");
+            
+            try {
+                String path=new File(".").getCanonicalPath();
+                FileUtils.copyFileToDirectory(file, new File(path+"/image")); //copy file ke folder image
+            } catch (IOException ex) {
+                Logger.getLogger(FormInputBuku.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
             kosong();
             textfieldKodeBuku.requestFocus();
             datatable();
@@ -459,13 +494,20 @@ public class FormInputBuku extends javax.swing.JFrame {
             stat.setString(4, textfieldPengarang.getText());
             stat.setString(5, textfieldPenerbit.getText());
             stat.setString(6, textfieldTahunTerbit.getText());
-            stat.setString(7, textfieldEdisi.getText());
-            stat.setString(8, textfieldISBN.getText());
-            stat.setString(9, textfieldJumlah.getText());
+            stat.setString(7, textfieldKodeRak.getText());
+            stat.setString(8, textfieldJumlah.getText());
+            stat.setString(9, textfieldNamaFileBuku.getText());
 
-            
             stat.executeUpdate();
             JOptionPane.showMessageDialog(null, "Data Berhasil Disimpan");
+            
+            try {
+                String path=new File(".").getCanonicalPath();
+                FileUtils.copyFileToDirectory(file, new File(path+"/image")); //copy file ke folder image
+            } catch (IOException ex) {
+                Logger.getLogger(FormInputBuku.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
             kosong();
             textfieldKodeBuku.requestFocus();
             datatable();
@@ -501,13 +543,9 @@ public class FormInputBuku extends javax.swing.JFrame {
         kosong();
     }//GEN-LAST:event_buttonClearActionPerformed
 
-    private void textfieldEdisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textfieldEdisiActionPerformed
+    private void textfieldKodeRakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textfieldKodeRakActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textfieldEdisiActionPerformed
-
-    private void textfieldISBNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textfieldISBNActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textfieldISBNActionPerformed
+    }//GEN-LAST:event_textfieldKodeRakActionPerformed
 
     private void textfieldJumlahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textfieldJumlahActionPerformed
         // TODO add your handling code here:
@@ -520,38 +558,9 @@ public class FormInputBuku extends javax.swing.JFrame {
     private void tableBukuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableBukuMouseClicked
         // TODO add your handling code here:
         int bar = tableBuku.getSelectedRow();
-        String a = tabmode.getValueAt(bar, 0).toString();
-        String b = tabmode.getValueAt(bar, 1).toString();
-        String c = tabmode.getValueAt(bar, 2).toString();
-        String d = tabmode.getValueAt(bar, 3).toString();
-        String e = tabmode.getValueAt(bar, 4).toString();
-        String f = tabmode.getValueAt(bar, 5).toString();
-        String g = tabmode.getValueAt(bar, 6).toString();
-        String h = tabmode.getValueAt(bar, 7).toString();
-        String i = tabmode.getValueAt(bar, 8).toString();
+        String kode_buku = tabmode.getValueAt(bar, 0).toString();
 
-        comboboxKategoriBuku.setSelectedItem(a);
-        textfieldKodeBuku.setText(b);
-        textfieldJudul.setText(c);
-        textfieldPengarang.setText(d);
-        textfieldPenerbit.setText(e);
-        textfieldTahunTerbit.setText(f);
-        textfieldEdisi.setText(g);
-        textfieldISBN.setText(h);
-        textfieldJumlah.setText(i);
-    }//GEN-LAST:event_tableBukuMouseClicked
-
-    private void textfieldCariJudulBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textfieldCariJudulBukuActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textfieldCariJudulBukuActionPerformed
-
-    private void buttonCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCariActionPerformed
-        // TODO add your handling code here:
-        Object[] Baris = {"Kategori", "Kode Buku", "Judul", "Pengarang", 
-            "Penerbit", "Tahun Terbit", "Edisi", "ISBN", "Jumlah"};
-        tabmode = new DefaultTableModel(null, Baris);
-        tableBuku.setModel(tabmode);
-        String sql = "SELECT * FROM buku WHERE judul_buku like '%"+textfieldCariJudulBuku.getText()+"%'";
+        String sql = "SELECT * FROM buku WHERE kode_buku='"+ kode_buku +"'";
         try{
             java.sql.Statement stat = conn.createStatement();
             ResultSet hasil = stat.executeQuery(sql);
@@ -562,14 +571,66 @@ public class FormInputBuku extends javax.swing.JFrame {
                 String d = hasil.getString("pengarang");
                 String e = hasil.getString("penerbit");
                 String f = hasil.getString("tahun_terbit");
-                String g = hasil.getString("edisi");
-                String h = hasil.getString("isbn");
-                String i = hasil.getString("jumlah");
-                String[] data={a, b, c, d, e, f, g, h, i};
-                tabmode.addRow(data);
-            }
-        }catch (Exception e){
+                String g = hasil.getString("kode_rak");
+                String h = hasil.getString("jumlah");
+                String i = hasil.getString("image");
+                 
+                comboboxKategoriBuku.setSelectedItem(a);
+                textfieldKodeBuku.setText(b);
+                textfieldJudul.setText(c);
+                textfieldPengarang.setText(d);
+                textfieldPenerbit.setText(e);
+                textfieldTahunTerbit.setText(f);
+                textfieldKodeRak.setText(g);
+                textfieldJumlah.setText(h);
+                textfieldNamaFileBuku.setText(i);   
+      
+                //Untuk Ambil Gambar dari folder Image yang namanya ada di database
+                try {
+                    Toolkit toolkit=Toolkit.getDefaultToolkit();
 
+                    String path=new File(".").getCanonicalPath();
+
+                    Image image=toolkit.getImage(path+"/image/"+i); //mengambil gambar dari folder image
+                    Image imagedResized=image.getScaledInstance(140, 170, Image.SCALE_DEFAULT); //resize foto sesuai ukuran jlabel
+                    ImageIcon icon=new ImageIcon(imagedResized);
+                    jLabelGambar.setIcon(icon); // memasang gambar pada jlabel
+                }catch (IOException ex) {
+                            Logger.getLogger(FormInputBuku.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }catch (SQLException e)     {
+            
+        }       
+    }//GEN-LAST:event_tableBukuMouseClicked
+
+    private void textfieldCariJudulBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textfieldCariJudulBukuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textfieldCariJudulBukuActionPerformed
+
+    private void buttonCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCariActionPerformed
+        // TODO add your handling code here:
+        Object[] Baris = {"Kode Buku", "Judul", "Pengarang", 
+            "Penerbit", "Jumlah"};
+        tabmode = new DefaultTableModel(null, Baris);
+        tableBuku.setModel(tabmode);
+        String sql = "SELECT * FROM buku WHERE judul_buku like '%"+textfieldCariJudulBuku.getText()+"%'";
+
+        try{
+            java.sql.Statement stat = conn.createStatement();
+            ResultSet hasil = stat.executeQuery(sql);
+            while(hasil.next()){
+                String a = hasil.getString("kode_buku");
+                String b = hasil.getString("judul_buku");
+                String c = hasil.getString("pengarang");
+                String d = hasil.getString("penerbit");
+                String e = hasil.getString("jumlah");
+
+                String[] data={a, b, c, d, e};
+                tabmode.addRow(data);
+
+            }
+        }catch (SQLException e){                  
         }
     }//GEN-LAST:event_buttonCariActionPerformed
 
@@ -584,6 +645,27 @@ public class FormInputBuku extends javax.swing.JFrame {
         new FormMenuUtama().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void jButtonPilihGambarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPilihGambarActionPerformed
+        // TODO add your handling code here:
+        jfc=new JFileChooser();
+        if(jfc.showOpenDialog(jLabelGambar)==JFileChooser.APPROVE_OPTION){
+            
+            Toolkit toolkit=Toolkit.getDefaultToolkit();
+            Image image=toolkit.getImage(jfc.getSelectedFile().getAbsolutePath());
+            Image imagedResized=image.getScaledInstance(140, 170, Image.SCALE_DEFAULT);
+            ImageIcon imageIcon=new ImageIcon(imagedResized);
+            
+            jLabelGambar.setIcon(imageIcon);
+            textfieldNamaFileBuku.setText(jfc.getSelectedFile().getName());
+
+            file=new File(jfc.getSelectedFile().getPath()); // file untuk dikopi
+        }
+    }//GEN-LAST:event_jButtonPilihGambarActionPerformed
+
+    private void textfieldNamaFileBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textfieldNamaFileBukuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textfieldNamaFileBukuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -635,18 +717,20 @@ public class FormInputBuku extends javax.swing.JFrame {
     private javax.swing.JButton buttonEdit;
     private javax.swing.JButton buttonSave;
     private javax.swing.JComboBox<String> comboboxKategoriBuku;
+    private javax.swing.JButton jButtonPilihGambar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabelGambar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelEdisi;
-    private javax.swing.JLabel labelISBN;
     private javax.swing.JLabel labelJudul;
     private javax.swing.JLabel labelJumlah;
     private javax.swing.JLabel labelKategoriBuku;
     private javax.swing.JLabel labelKodeBuku;
+    private javax.swing.JLabel labelKodeBuku1;
     private javax.swing.JLabel labelNama2;
     private javax.swing.JLabel labelPenerbit;
     private javax.swing.JLabel labelPengarang;
@@ -655,11 +739,11 @@ public class FormInputBuku extends javax.swing.JFrame {
     private javax.swing.JLabel labelTitle3;
     private javax.swing.JTable tableBuku;
     private javax.swing.JTextField textfieldCariJudulBuku;
-    private javax.swing.JTextField textfieldEdisi;
-    private javax.swing.JTextField textfieldISBN;
     private javax.swing.JTextField textfieldJudul;
     private javax.swing.JTextField textfieldJumlah;
     private javax.swing.JTextField textfieldKodeBuku;
+    private javax.swing.JTextField textfieldKodeRak;
+    private javax.swing.JTextField textfieldNamaFileBuku;
     private javax.swing.JTextField textfieldPenerbit;
     private javax.swing.JTextField textfieldPengarang;
     private javax.swing.JTextField textfieldTahunTerbit;
