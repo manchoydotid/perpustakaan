@@ -84,14 +84,15 @@ public final class FormMenuUtama extends javax.swing.JFrame {
         data_anggota = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        data_transaksi = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
+        data_pengembalian = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         data_laporan = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        data_laporan1 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
         panel_data_transaksi = new javax.swing.JPanel();
         labelJumlahTransaksi = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
@@ -101,12 +102,23 @@ public final class FormMenuUtama extends javax.swing.JFrame {
         panel_data_anggota = new javax.swing.JPanel();
         labelJumlahAnggota = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
+        data_peminjaman = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        data_laporan2 = new javax.swing.JPanel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        data_laporan3 = new javax.swing.JPanel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuMaster = new javax.swing.JMenu();
         jMenuItemInputDataBuku = new javax.swing.JMenuItem();
         jMenuItemRegistrasiAnggota = new javax.swing.JMenuItem();
         jMenuItemRegistrasiPetugas = new javax.swing.JMenuItem();
         jMenuTransaksi = new javax.swing.JMenu();
+        jMenuItemPeminjamanBuku = new javax.swing.JMenuItem();
+        jMenuItemPengembalianBuku = new javax.swing.JMenuItem();
         jMenuLaporan = new javax.swing.JMenu();
         jMenuLogout = new javax.swing.JMenu();
         jMenuItemLogout = new javax.swing.JMenuItem();
@@ -116,7 +128,6 @@ public final class FormMenuUtama extends javax.swing.JFrame {
         setBackground(new java.awt.Color(255, 255, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMinimumSize(new java.awt.Dimension(1000, 630));
-        setPreferredSize(new java.awt.Dimension(1000, 630));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(245, 247, 250));
@@ -165,42 +176,38 @@ public final class FormMenuUtama extends javax.swing.JFrame {
         jLabel11.setBackground(new java.awt.Color(71, 127, 255));
         jLabel11.setFont(new java.awt.Font("Montserrat SemiBold", 0, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Registrasi Anggota");
-        data_anggota.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+        jLabel11.setText("Anggota");
+        data_anggota.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, -1, -1));
 
         jPanel1.add(data_anggota, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, 230, 180));
 
-        data_transaksi.setBackground(new java.awt.Color(152, 197, 44));
-        data_transaksi.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(152, 197, 44), 1, true));
-        data_transaksi.setPreferredSize(new java.awt.Dimension(200, 200));
-        data_transaksi.addMouseListener(new java.awt.event.MouseAdapter() {
+        data_pengembalian.setBackground(new java.awt.Color(152, 197, 44));
+        data_pengembalian.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(152, 197, 44), 1, true));
+        data_pengembalian.setPreferredSize(new java.awt.Dimension(200, 200));
+        data_pengembalian.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                data_transaksiMouseClicked(evt);
+                data_pengembalianMouseClicked(evt);
             }
         });
-        data_transaksi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tampilan/images/book.png"))); // NOI18N
-        data_transaksi.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, -1));
+        data_pengembalian.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel7.setBackground(new java.awt.Color(71, 127, 255));
         jLabel7.setFont(new java.awt.Font("Montserrat SemiBold", 0, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Peminjaman Buku");
-        data_transaksi.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, -1, -1));
+        jLabel7.setText("Pengembalian Buku");
+        data_pengembalian.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, -1));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tampilan/images/reload.png"))); // NOI18N
-        data_transaksi.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, -1, -1));
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+        });
+        data_pengembalian.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 140, 120));
 
-        jLabel9.setBackground(new java.awt.Color(71, 127, 255));
-        jLabel9.setFont(new java.awt.Font("Montserrat SemiBold", 0, 30)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Transaksi ");
-        data_transaksi.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, -1, -1));
+        jPanel1.add(data_pengembalian, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 360, 230, 170));
 
-        jPanel1.add(data_transaksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 360, 470, 170));
-
-        data_laporan.setBackground(new java.awt.Color(198, 95, 225));
+        data_laporan.setBackground(new java.awt.Color(221, 88, 77));
         data_laporan.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(198, 95, 225), 1, true));
         data_laporan.setPreferredSize(new java.awt.Dimension(200, 200));
         data_laporan.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -210,16 +217,37 @@ public final class FormMenuUtama extends javax.swing.JFrame {
         });
         data_laporan.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tampilan/images/report.png"))); // NOI18N
-        data_laporan.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, -1, -1));
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tampilan/images/petugas.png"))); // NOI18N
+        data_laporan.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, 130));
 
         jLabel13.setBackground(new java.awt.Color(71, 127, 255));
-        jLabel13.setFont(new java.awt.Font("Montserrat SemiBold", 0, 24)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Montserrat SemiBold", 0, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Laporan");
-        data_laporan.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, -1, -1));
+        jLabel13.setText("Petugas");
+        data_laporan.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, -1, -1));
 
-        jPanel1.add(data_laporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 170, 200, 360));
+        data_laporan1.setBackground(new java.awt.Color(198, 95, 225));
+        data_laporan1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(198, 95, 225), 1, true));
+        data_laporan1.setPreferredSize(new java.awt.Dimension(200, 200));
+        data_laporan1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                data_laporan1MouseClicked(evt);
+            }
+        });
+        data_laporan1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tampilan/images/report.png"))); // NOI18N
+        data_laporan1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, 130));
+
+        jLabel15.setBackground(new java.awt.Color(71, 127, 255));
+        jLabel15.setFont(new java.awt.Font("Montserrat SemiBold", 0, 18)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Laporan");
+        data_laporan1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, -1, -1));
+
+        data_laporan.add(data_laporan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 360, 200, 170));
+
+        jPanel1.add(data_laporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 170, 200, 180));
 
         panel_data_transaksi.setBackground(new java.awt.Color(255, 255, 255));
         panel_data_transaksi.setPreferredSize(new java.awt.Dimension(200, 200));
@@ -296,6 +324,69 @@ public final class FormMenuUtama extends javax.swing.JFrame {
 
         jPanel1.add(panel_data_anggota, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 10, 240, 150));
 
+        data_peminjaman.setBackground(new java.awt.Color(152, 197, 44));
+        data_peminjaman.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(152, 197, 44), 1, true));
+        data_peminjaman.setPreferredSize(new java.awt.Dimension(200, 200));
+        data_peminjaman.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                data_peminjamanMouseClicked(evt);
+            }
+        });
+        data_peminjaman.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tampilan/images/book.png"))); // NOI18N
+        data_peminjaman.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 110, 100));
+
+        jLabel18.setBackground(new java.awt.Color(71, 127, 255));
+        jLabel18.setFont(new java.awt.Font("Montserrat SemiBold", 0, 18)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setText("Peminjaman Buku");
+        data_peminjaman.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, -1));
+
+        jPanel1.add(data_peminjaman, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 360, 230, 170));
+
+        data_laporan2.setBackground(new java.awt.Color(198, 95, 225));
+        data_laporan2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(198, 95, 225), 1, true));
+        data_laporan2.setPreferredSize(new java.awt.Dimension(200, 200));
+        data_laporan2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                data_laporan2MouseClicked(evt);
+            }
+        });
+        data_laporan2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tampilan/images/report.png"))); // NOI18N
+        data_laporan2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, 130));
+
+        jLabel21.setBackground(new java.awt.Color(71, 127, 255));
+        jLabel21.setFont(new java.awt.Font("Montserrat SemiBold", 0, 18)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel21.setText("Laporan");
+        data_laporan2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, -1, -1));
+
+        data_laporan3.setBackground(new java.awt.Color(198, 95, 225));
+        data_laporan3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(198, 95, 225), 1, true));
+        data_laporan3.setPreferredSize(new java.awt.Dimension(200, 200));
+        data_laporan3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                data_laporan3MouseClicked(evt);
+            }
+        });
+        data_laporan3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tampilan/images/report.png"))); // NOI18N
+        data_laporan3.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, 130));
+
+        jLabel24.setBackground(new java.awt.Color(71, 127, 255));
+        jLabel24.setFont(new java.awt.Font("Montserrat SemiBold", 0, 18)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel24.setText("Laporan");
+        data_laporan3.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, -1, -1));
+
+        data_laporan2.add(data_laporan3, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 360, 200, 170));
+
+        jPanel1.add(data_laporan2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 360, 200, 170));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 560));
 
         jMenuBar1.setBackground(new java.awt.Color(245, 247, 250));
@@ -359,6 +450,29 @@ public final class FormMenuUtama extends javax.swing.JFrame {
                 jMenuTransaksiActionPerformed(evt);
             }
         });
+
+        jMenuItemPeminjamanBuku.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItemPeminjamanBuku.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jMenuItemPeminjamanBuku.setText("Peminjaman");
+        jMenuItemPeminjamanBuku.setPreferredSize(new java.awt.Dimension(280, 30));
+        jMenuItemPeminjamanBuku.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemPeminjamanBukuActionPerformed(evt);
+            }
+        });
+        jMenuTransaksi.add(jMenuItemPeminjamanBuku);
+
+        jMenuItemPengembalianBuku.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItemPengembalianBuku.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jMenuItemPengembalianBuku.setText("Pengembalian");
+        jMenuItemPengembalianBuku.setPreferredSize(new java.awt.Dimension(280, 30));
+        jMenuItemPengembalianBuku.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemPengembalianBukuActionPerformed(evt);
+            }
+        });
+        jMenuTransaksi.add(jMenuItemPengembalianBuku);
+
         jMenuBar1.add(jMenuTransaksi);
 
         jMenuLaporan.setBackground(new java.awt.Color(255, 255, 255));
@@ -444,12 +558,11 @@ public final class FormMenuUtama extends javax.swing.JFrame {
         
     }//GEN-LAST:event_data_anggotaMouseClicked
 
-    private void data_transaksiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_data_transaksiMouseClicked
+    private void data_pengembalianMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_data_pengembalianMouseClicked
         // TODO add your handling code here:
-        new FormTransaksi().setVisible(true);
+        new FormPengembalianBuku().setVisible(true);
                 this.dispose();
-
-    }//GEN-LAST:event_data_transaksiMouseClicked
+    }//GEN-LAST:event_data_pengembalianMouseClicked
 
     private void jMenuTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTransaksiActionPerformed
         // TODO add your handling code here:
@@ -457,7 +570,7 @@ public final class FormMenuUtama extends javax.swing.JFrame {
 
     private void jMenuTransaksiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuTransaksiMouseClicked
         // TODO add your handling code here:
-        new FormTransaksi().setVisible(true);
+        new FormPeminjamanBuku().setVisible(true);
         this.dispose();
         
         
@@ -491,7 +604,6 @@ public final class FormMenuUtama extends javax.swing.JFrame {
         // TODO add your handling code here:
         new FormMasterLaporan().setVisible(true);
         this.dispose();
-        
     }//GEN-LAST:event_data_laporanMouseClicked
 
     private void jMenuItemRegistrasiPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistrasiPetugasActionPerformed
@@ -499,6 +611,42 @@ public final class FormMenuUtama extends javax.swing.JFrame {
         new FormPetugas().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItemRegistrasiPetugasActionPerformed
+
+    private void data_peminjamanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_data_peminjamanMouseClicked
+        // TODO add your handling code here:
+        new FormPeminjamanBuku().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_data_peminjamanMouseClicked
+
+    private void jMenuItemPeminjamanBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPeminjamanBukuActionPerformed
+        // TODO add your handling code here:
+        new FormPeminjamanBuku().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItemPeminjamanBukuActionPerformed
+
+    private void jMenuItemPengembalianBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPengembalianBukuActionPerformed
+        // TODO add your handling code here:
+        new FormPengembalianBuku().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItemPengembalianBukuActionPerformed
+
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        // TODO add your handling code here:
+        new FormPengembalianBuku().setVisible(true);
+        this.dispose();        
+    }//GEN-LAST:event_jLabel8MouseClicked
+
+    private void data_laporan1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_data_laporan1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_data_laporan1MouseClicked
+
+    private void data_laporan3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_data_laporan3MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_data_laporan3MouseClicked
+
+    private void data_laporan2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_data_laporan2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_data_laporan2MouseClicked
 
     /**
      * @param args the command line arguments
@@ -539,24 +687,36 @@ public final class FormMenuUtama extends javax.swing.JFrame {
     private javax.swing.JPanel data_anggota;
     private javax.swing.JPanel data_buku;
     private javax.swing.JPanel data_laporan;
-    private javax.swing.JPanel data_transaksi;
+    private javax.swing.JPanel data_laporan1;
+    private javax.swing.JPanel data_laporan2;
+    private javax.swing.JPanel data_laporan3;
+    private javax.swing.JPanel data_peminjaman;
+    private javax.swing.JPanel data_pengembalian;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItemInputDataBuku;
     private javax.swing.JMenuItem jMenuItemLogout;
+    private javax.swing.JMenuItem jMenuItemPeminjamanBuku;
+    private javax.swing.JMenuItem jMenuItemPengembalianBuku;
     private javax.swing.JMenuItem jMenuItemRegistrasiAnggota;
     private javax.swing.JMenuItem jMenuItemRegistrasiPetugas;
     private javax.swing.JMenu jMenuLaporan;

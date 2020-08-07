@@ -334,7 +334,7 @@ public class FormPengembalianBuku extends javax.swing.JFrame {
         buttonCancel.setBackground(new java.awt.Color(9, 110, 59));
         buttonCancel.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonCancel.setForeground(new java.awt.Color(9, 110, 59));
-        buttonCancel.setText("Cancel");
+        buttonCancel.setText("Batal");
         buttonCancel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(71, 127, 255)));
         buttonCancel.setContentAreaFilled(false);
         buttonCancel.setPreferredSize(new java.awt.Dimension(75, 30));

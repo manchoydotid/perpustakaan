@@ -223,7 +223,7 @@ public final class FormPeminjamanBuku extends javax.swing.JFrame {
         buttonClear.setBackground(new java.awt.Color(9, 110, 59));
         buttonClear.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonClear.setForeground(new java.awt.Color(255, 255, 255));
-        buttonClear.setText("Clear");
+        buttonClear.setText("Bersihkan");
         buttonClear.setBorder(null);
         buttonClear.setPreferredSize(new java.awt.Dimension(75, 30));
         buttonClear.addActionListener(new java.awt.event.ActionListener() {
@@ -231,12 +231,12 @@ public final class FormPeminjamanBuku extends javax.swing.JFrame {
                 buttonClearActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 540, 80, -1));
+        jPanel1.add(buttonClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 540, 90, -1));
 
         buttonSimpan.setBackground(new java.awt.Color(9, 110, 59));
         buttonSimpan.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonSimpan.setForeground(new java.awt.Color(255, 255, 255));
-        buttonSimpan.setText("Save");
+        buttonSimpan.setText("Simpan");
         buttonSimpan.setBorder(null);
         buttonSimpan.setPreferredSize(new java.awt.Dimension(75, 30));
         buttonSimpan.addActionListener(new java.awt.event.ActionListener() {
@@ -249,7 +249,7 @@ public final class FormPeminjamanBuku extends javax.swing.JFrame {
         buttonHapus.setBackground(new java.awt.Color(9, 110, 59));
         buttonHapus.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonHapus.setForeground(new java.awt.Color(255, 255, 255));
-        buttonHapus.setText("Delete");
+        buttonHapus.setText("Hapus");
         buttonHapus.setBorder(null);
         buttonHapus.setPreferredSize(new java.awt.Dimension(75, 30));
         buttonHapus.addActionListener(new java.awt.event.ActionListener() {
@@ -408,7 +408,7 @@ public final class FormPeminjamanBuku extends javax.swing.JFrame {
         jPanel1.add(dateChooserTglKembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 100, 150, -1));
         jPanel1.add(dateChooserTglPinjam, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 100, 150, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 28, -1, 590));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 28, -1, 580));
 
         jPanel3.setBackground(new java.awt.Color(212, 210, 212));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -500,65 +500,73 @@ public final class FormPeminjamanBuku extends javax.swing.JFrame {
         java.util.Date tglPinjam = (java.util.Date) this.dateChooserTglPinjam.getDate();
         java.util.Date tglKembali = (java.util.Date) this.dateChooserTglKembali.getDate();      
           
-        String kodeBuku;
-        int jumlahBuku = Integer.parseInt(labelJumlah.getText());
-        String statusPinjam = "dipinjam";
-                
-        if(jumlahBuku > 0){        
-            try{
-                String sql = "INSERT INTO transaksi VALUES (?,?,?,?,?,?,?,?,?)";
-
-                PreparedStatement stat = conn.prepareStatement(sql);
-                stat.setString(1, textfieldIDTransaksi.getText());
-                stat.setDate(2, new Date(tglPinjam.getTime()));
-                stat.setDate(3, new Date(tglKembali.getTime()));            
-                stat.setString(4, textfieldIDAnggota.getText());            
-                stat.setString(5, labelNama.getText());
-                stat.setString(6, textfieldKodeBuku.getText()); 
-                stat.setString(7, labelJudulBuku.getText());
-                stat.setString(8, "0");
-                stat.setString(9, statusPinjam);
-                
-                stat.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Data Transaksi Berhasil Disimpan");
-                
-                kodeBuku = textfieldKodeBuku.getText();              
-                textfieldKodeBuku.requestFocus();
-                datatable();
-                
-                //Jika Transaksi berhasil disimpan, maka stock buku berkurang
-                try {
-                    System.out.println("Kode buku :"+kodeBuku);
-                    
-                    String sqlUpdateStock = "UPDATE buku SET jumlah=? where kode_buku='"+kodeBuku+"'";
-                    PreparedStatement statment = conn.prepareStatement(sqlUpdateStock);
-                    System.out.println("Jumlah Buku sebelum : "+jumlahBuku);
-                    
-                    int x = jumlahBuku - 1;
-                    String jumlahStockAkhir = Integer.toString(x);
-                    statment.setString(1, jumlahStockAkhir);
-                    System.out.println("Jumlah Buku sesudah : "+x);
-
-                    statment.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Stock dikurangi 1");
-
-                }catch(SQLException e){
-                    JOptionPane.showMessageDialog(null, "Data Gagal dikurangi"+e);
-                }                   
-                
-                kosong();  
-                kosongkanDataAnggota();
-                kosongkanDataBuku(); 
-            }catch(SQLException e){
-                JOptionPane.showMessageDialog(null, "Data Gagal Disimpan "+e);
-            }
+        if(textfieldIDTransaksi.getText().equals("") ||
+            dateChooserTglPinjam.getDate() == null ||
+            dateChooserTglKembali.getDate() == null ||
+            labelJumlah.getText().equals("")
+          ){      
+            javax.swing.JOptionPane. showMessageDialog(null,"Data belum lengkap. \nSilahkan periksa kembali.",
+            "Error",
+            javax.swing.JOptionPane.ERROR_MESSAGE);  
         }else{
-           JOptionPane.showMessageDialog(null, "Stock Buku Habis");
-           kosong();  
-           kosongkanDataAnggota();
-           kosongkanDataBuku();
+            String kodeBuku;
+            int jumlahBuku = Integer.parseInt(labelJumlah.getText());
+            String statusPinjam = "dipinjam";
+            if(jumlahBuku > 0){
+                try{
+                    String sql = "INSERT INTO transaksi VALUES (?,?,?,?,?,?,?,?,?)";
+
+                    PreparedStatement stat = conn.prepareStatement(sql);
+                    stat.setString(1, textfieldIDTransaksi.getText());
+                    stat.setDate(2, new Date(tglPinjam.getTime()));
+                    stat.setDate(3, new Date(tglKembali.getTime()));            
+                    stat.setString(4, textfieldIDAnggota.getText());            
+                    stat.setString(5, labelNama.getText());
+                    stat.setString(6, textfieldKodeBuku.getText()); 
+                    stat.setString(7, labelJudulBuku.getText());
+                    stat.setString(8, "0");
+                    stat.setString(9, statusPinjam);
+
+                    stat.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Data Transaksi Berhasil Disimpan");
+
+                    kodeBuku = textfieldKodeBuku.getText();              
+                    textfieldKodeBuku.requestFocus();
+                    datatable();
+
+                    //Jika Transaksi berhasil disimpan, maka stock buku berkurang
+                    try {
+                        System.out.println("Kode buku :"+kodeBuku);
+
+                        String sqlUpdateStock = "UPDATE buku SET jumlah=? where kode_buku='"+kodeBuku+"'";
+                        PreparedStatement statment = conn.prepareStatement(sqlUpdateStock);
+                        System.out.println("Jumlah Buku sebelum : "+jumlahBuku);
+
+                        int x = jumlahBuku - 1;
+                        String jumlahStockAkhir = Integer.toString(x);
+                        statment.setString(1, jumlahStockAkhir);
+                        System.out.println("Jumlah Buku sesudah : "+x);
+
+                        statment.executeUpdate();
+                        JOptionPane.showMessageDialog(null, "Stock dikurangi 1");
+
+                    }catch(SQLException e){
+                        JOptionPane.showMessageDialog(null, "Data Gagal dikurangi"+e);
+                    }                   
+
+                    kosong();  
+                    kosongkanDataAnggota();
+                    kosongkanDataBuku(); 
+                }catch(SQLException e){
+                    JOptionPane.showMessageDialog(null, "Data Gagal Disimpan "+e);
+                }
+            }else{
+               JOptionPane.showMessageDialog(null, "Stock Buku Habis");
+               kosong();  
+               kosongkanDataAnggota();
+               kosongkanDataBuku();
+            }
         }
-            
     }//GEN-LAST:event_buttonSimpanActionPerformed
 
     private void textfieldIDAnggotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textfieldIDAnggotaActionPerformed
@@ -567,51 +575,63 @@ public final class FormPeminjamanBuku extends javax.swing.JFrame {
 
     private void buttonSearchAnggotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSearchAnggotaActionPerformed
         // TODO add your handling code here:
-        try{
-            String sql = "SELECT * FROM anggota where id_anggota='"+textfieldIDAnggota.getText()+"'";
-            java.sql.Statement stat = conn.createStatement();
-            ResultSet hasil = stat.executeQuery(sql);
+        if(textfieldIDAnggota.getText().equals("")){
+            javax.swing.JOptionPane. showMessageDialog(null,"Masukan ID Anggota",
+            "Error",
+            javax.swing.JOptionPane.ERROR_MESSAGE);            
+        }else{
+            try{
+                String sql = "SELECT * FROM anggota where id_anggota='"+textfieldIDAnggota.getText()+"'";
+                java.sql.Statement stat = conn.createStatement();
+                ResultSet hasil = stat.executeQuery(sql);
 
-            if(hasil.next()){
-                String a = hasil.getString("nama");
-                String b = hasil.getString("nis");
-                String c = hasil.getString("no_tlp");
+                if(hasil.next()){
+                    String a = hasil.getString("nama");
+                    String b = hasil.getString("nis");
+                    String c = hasil.getString("no_tlp");
 
-                labelNama.setText(a);
-                labelNIS.setText(b);
-                labelNoTeleponAnggota.setText(c);
-            }else{
-                JOptionPane.showMessageDialog(null, "ID anggota yang anda masukan salah!");
-                kosongkanDataAnggota();
+                    labelNama.setText(a);
+                    labelNIS.setText(b);
+                    labelNoTeleponAnggota.setText(c);
+                }else{
+                    JOptionPane.showMessageDialog(null, "ID anggota yang anda masukan salah!");
+                    kosongkanDataAnggota();
+                }
+            }catch(SQLException e){
+                JOptionPane.showMessageDialog(this, e.getMessage());
             }
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_buttonSearchAnggotaActionPerformed
 
     private void buttonSearchKodeBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSearchKodeBukuActionPerformed
         // TODO add your handling code here:
-        try{
-            String sql = "SELECT * FROM buku where kode_buku='"+textfieldKodeBuku.getText()+"'";
-            java.sql.Statement stat = conn.createStatement();
-            ResultSet hasil = stat.executeQuery(sql);
-            
-            if(hasil.next()){
-                String a = hasil.getString("judul_buku");
-                String b = hasil.getString("pengarang");                
-                String c = hasil.getString("penerbit");
-                String d = hasil.getString("jumlah");
-                
-                labelJudulBuku.setText(a);
-                labelPengarangBuku.setText(b);
-                labelPenerbitBuku.setText(c);
-                labelJumlah.setText(d);
-            }else{
-                JOptionPane.showMessageDialog(null, "Kode buku yang anda masukan salah!"); 
-                kosongkanDataBuku();
+        if(textfieldKodeBuku.getText().equals("")){
+            javax.swing.JOptionPane. showMessageDialog(null,"Masukan Kode Buku",
+            "Error",
+            javax.swing.JOptionPane.ERROR_MESSAGE);            
+        }else{
+            try{
+                String sql = "SELECT * FROM buku where kode_buku='"+textfieldKodeBuku.getText()+"'";
+                java.sql.Statement stat = conn.createStatement();
+                ResultSet hasil = stat.executeQuery(sql);
+
+                if(hasil.next()){
+                    String a = hasil.getString("judul_buku");
+                    String b = hasil.getString("pengarang");                
+                    String c = hasil.getString("penerbit");
+                    String d = hasil.getString("jumlah");
+
+                    labelJudulBuku.setText(a);
+                    labelPengarangBuku.setText(b);
+                    labelPenerbitBuku.setText(c);
+                    labelJumlah.setText(d);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Kode buku yang anda masukan salah!"); 
+                    kosongkanDataBuku();
+                }
+            }catch(SQLException e){
+                JOptionPane.showMessageDialog(this, e.getMessage());            
             }
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(this, e.getMessage());            
         }
     }//GEN-LAST:event_buttonSearchKodeBukuActionPerformed
 

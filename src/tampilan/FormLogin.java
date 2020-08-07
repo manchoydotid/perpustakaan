@@ -24,27 +24,35 @@ public class FormLogin extends javax.swing.JFrame {
         initComponents();
     }
     private void loginMethod(){
-        try{
-            String sql = "SELECT * FROM petugas WHERE "
-                    + "username='"+textfieldUsername.getText()
-                    + "' AND password='"+jPasswordField.getText()+"'";
-            
-            java.sql.Statement stat = conn.createStatement();
-            ResultSet hasil = stat.executeQuery(sql);
-            
-            if(hasil.next()){
-                if(textfieldUsername.getText().equals(hasil.getString("username")) &&
-                        jPasswordField.getText().equals(hasil.getString("password")))
-                {
-                    new FormMenuUtama().setVisible(true);
-                    this.dispose();
+        if(textfieldUsername.getText().equals("")||
+                jPasswordField.getText().equals("")
+        ){
+            javax.swing.JOptionPane. showMessageDialog(null,"Masukan username dan password.",
+            "Error",
+            javax.swing.JOptionPane.ERROR_MESSAGE);
+        }else{
+            try{
+                String sql = "SELECT * FROM petugas WHERE "
+                        + "username='"+textfieldUsername.getText()
+                        + "' AND password='"+jPasswordField.getText()+"'";
+
+                java.sql.Statement stat = conn.createStatement();
+                ResultSet hasil = stat.executeQuery(sql);
+
+                if(hasil.next()){
+                    if(textfieldUsername.getText().equals(hasil.getString("username")) &&
+                            jPasswordField.getText().equals(hasil.getString("password")))
+                    {
+                        new FormMenuUtama().setVisible(true);
+                        this.dispose();
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Username atau password salah.");
                 }
-            }else{
-                JOptionPane.showMessageDialog(null, "Username atau Password Salah!");
-            }
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }        
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }   
+        }
     }
        
     /**
@@ -62,7 +70,6 @@ public class FormLogin extends javax.swing.JFrame {
         labelUsername = new javax.swing.JLabel();
         textfieldUsername = new javax.swing.JTextField();
         buttonLogin = new javax.swing.JButton();
-        buttonCancel = new javax.swing.JButton();
         jPasswordField = new javax.swing.JPasswordField();
         labelUsername3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -122,19 +129,6 @@ public class FormLogin extends javax.swing.JFrame {
         });
         jPanel3.add(buttonLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 400, 250, 40));
 
-        buttonCancel.setBackground(new java.awt.Color(255, 255, 255));
-        buttonCancel.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
-        buttonCancel.setForeground(new java.awt.Color(9, 110, 59));
-        buttonCancel.setText("CANCEL");
-        buttonCancel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(9, 110, 59), 1, true));
-        buttonCancel.setContentAreaFilled(false);
-        buttonCancel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonCancelActionPerformed(evt);
-            }
-        });
-        jPanel3.add(buttonCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 450, 250, 40));
-
         jPasswordField.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
         jPasswordField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(230, 231, 232), 1, true));
         jPasswordField.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -182,10 +176,6 @@ public class FormLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
         loginMethod();
     }//GEN-LAST:event_buttonLoginActionPerformed
-
-    private void buttonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_buttonCancelActionPerformed
 
     private void buttonLoginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buttonLoginKeyPressed
         // TODO add your handling code here:
@@ -254,7 +244,6 @@ public class FormLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonCancel;
     private javax.swing.JButton buttonLogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

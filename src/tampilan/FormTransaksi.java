@@ -222,7 +222,7 @@ public class FormTransaksi extends javax.swing.JFrame {
         buttonClear.setBackground(new java.awt.Color(71, 127, 255));
         buttonClear.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonClear.setForeground(new java.awt.Color(255, 255, 255));
-        buttonClear.setText("Clear");
+        buttonClear.setText("Bersihkan");
         buttonClear.setBorder(null);
         buttonClear.setPreferredSize(new java.awt.Dimension(75, 30));
         buttonClear.addActionListener(new java.awt.event.ActionListener() {
@@ -235,7 +235,7 @@ public class FormTransaksi extends javax.swing.JFrame {
         buttonSimpan.setBackground(new java.awt.Color(71, 127, 255));
         buttonSimpan.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonSimpan.setForeground(new java.awt.Color(255, 255, 255));
-        buttonSimpan.setText("Save");
+        buttonSimpan.setText("Simpan");
         buttonSimpan.setBorder(null);
         buttonSimpan.setPreferredSize(new java.awt.Dimension(75, 30));
         buttonSimpan.addActionListener(new java.awt.event.ActionListener() {
@@ -248,7 +248,7 @@ public class FormTransaksi extends javax.swing.JFrame {
         buttonHapus.setBackground(new java.awt.Color(71, 127, 255));
         buttonHapus.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonHapus.setForeground(new java.awt.Color(255, 255, 255));
-        buttonHapus.setText("Delete");
+        buttonHapus.setText("Hapus");
         buttonHapus.setBorder(null);
         buttonHapus.setPreferredSize(new java.awt.Dimension(75, 30));
         buttonHapus.addActionListener(new java.awt.event.ActionListener() {

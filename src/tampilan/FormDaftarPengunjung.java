@@ -6,9 +6,13 @@
 package tampilan;
 
 import java.sql.*;
-import javax.swing.JFrame;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 import koneksi.koneksi;
 
 /**
@@ -23,8 +27,44 @@ public class FormDaftarPengunjung extends javax.swing.JFrame {
      */
     public FormDaftarPengunjung() {
         initComponents();
+        textfieldNIS.setDocument(new JTextFieldLimit(10));
+        
+        java.util.Date date = Calendar.getInstance().getTime();  
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");  
+        String strDate = dateFormat.format(date);  
+        System.out.println("Converted String: " + strDate);  
+        jLabelTgl.setText(strDate);
+        jLabelTgl.setVisible(false);                
     }
-       
+    
+    //Fungsi Limit
+    class JTextFieldLimit extends PlainDocument {
+        private int limit;
+        JTextFieldLimit(int limit) {
+          super();
+          this.limit = limit;
+        }
+
+        JTextFieldLimit(int limit, boolean upper) {
+          super();
+          this.limit = limit;
+        }
+
+        public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException {
+          if (str == null)
+            return;
+
+          if ((getLength() + str.length()) <= limit) {
+            super.insertString(offset, str, attr);
+          }
+        }
+    }
+    
+    class NotNullField {
+        
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -39,16 +79,21 @@ public class FormDaftarPengunjung extends javax.swing.JFrame {
         textfieldNama = new javax.swing.JTextField();
         buttonSimpan = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        textfieldIDAnggota = new javax.swing.JTextField();
+        textfieldNIS = new javax.swing.JTextField();
         labelUsername4 = new javax.swing.JLabel();
         comboboxKelas = new javax.swing.JComboBox<>();
         labelUsername6 = new javax.swing.JLabel();
         textfieldTujuan = new javax.swing.JTextField();
         labelUsername1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabelTgl = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Sistem Informasi Perpustakaan");
+        setBackground(new java.awt.Color(255, 170, 0));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setBackground(new java.awt.Color(255, 170, 0));
@@ -57,7 +102,7 @@ public class FormDaftarPengunjung extends javax.swing.JFrame {
         labelUsername.setFont(new java.awt.Font("Balsamiq Sans", 1, 24)); // NOI18N
         labelUsername.setForeground(new java.awt.Color(255, 255, 255));
         labelUsername.setText("Nama Kamu");
-        jPanel3.add(labelUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, -1, -1));
+        jPanel3.add(labelUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
 
         textfieldNama.setFont(new java.awt.Font("Balsamiq Sans", 1, 24)); // NOI18N
         textfieldNama.setToolTipText("");
@@ -67,7 +112,7 @@ public class FormDaftarPengunjung extends javax.swing.JFrame {
                 textfieldNamaActionPerformed(evt);
             }
         });
-        jPanel3.add(textfieldNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 250, 280, 40));
+        jPanel3.add(textfieldNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 280, 40));
 
         buttonSimpan.setBackground(new java.awt.Color(71, 127, 255));
         buttonSimpan.setFont(new java.awt.Font("Balsamiq Sans", 1, 24)); // NOI18N
@@ -88,28 +133,28 @@ public class FormDaftarPengunjung extends javax.swing.JFrame {
                 buttonSimpanKeyPressed(evt);
             }
         });
-        jPanel3.add(buttonSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 510, 250, 40));
+        jPanel3.add(buttonSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 520, 250, 40));
 
         jLabel3.setBackground(new java.awt.Color(71, 127, 255));
         jLabel3.setFont(new java.awt.Font("Balsamiq Sans", 1, 36)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("DATA PENGUNJUNG");
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, -1));
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
 
-        textfieldIDAnggota.setFont(new java.awt.Font("Balsamiq Sans", 1, 24)); // NOI18N
-        textfieldIDAnggota.setToolTipText("");
-        textfieldIDAnggota.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 231, 232)));
-        textfieldIDAnggota.addActionListener(new java.awt.event.ActionListener() {
+        textfieldNIS.setFont(new java.awt.Font("Balsamiq Sans", 1, 24)); // NOI18N
+        textfieldNIS.setToolTipText("");
+        textfieldNIS.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 231, 232)));
+        textfieldNIS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textfieldIDAnggotaActionPerformed(evt);
+                textfieldNISActionPerformed(evt);
             }
         });
-        jPanel3.add(textfieldIDAnggota, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 160, 280, 40));
+        jPanel3.add(textfieldNIS, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 280, 40));
 
         labelUsername4.setFont(new java.awt.Font("Balsamiq Sans", 1, 24)); // NOI18N
         labelUsername4.setForeground(new java.awt.Color(255, 255, 255));
         labelUsername4.setText("Kelas");
-        jPanel3.add(labelUsername4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 320, -1, -1));
+        jPanel3.add(labelUsername4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, -1, -1));
 
         comboboxKelas.setFont(new java.awt.Font("Balsamiq Sans", 1, 24)); // NOI18N
         comboboxKelas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6" }));
@@ -119,12 +164,12 @@ public class FormDaftarPengunjung extends javax.swing.JFrame {
                 comboboxKelasActionPerformed(evt);
             }
         });
-        jPanel3.add(comboboxKelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 350, 120, -1));
+        jPanel3.add(comboboxKelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, 120, -1));
 
         labelUsername6.setFont(new java.awt.Font("Balsamiq Sans", 1, 24)); // NOI18N
         labelUsername6.setForeground(new java.awt.Color(255, 255, 255));
         labelUsername6.setText("Tujuan");
-        jPanel3.add(labelUsername6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 410, -1, -1));
+        jPanel3.add(labelUsername6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, -1, -1));
 
         textfieldTujuan.setFont(new java.awt.Font("Balsamiq Sans", 1, 24)); // NOI18N
         textfieldTujuan.setToolTipText("");
@@ -134,17 +179,29 @@ public class FormDaftarPengunjung extends javax.swing.JFrame {
                 textfieldTujuanActionPerformed(evt);
             }
         });
-        jPanel3.add(textfieldTujuan, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 450, 270, 40));
+        jPanel3.add(textfieldTujuan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 430, 270, 70));
 
         labelUsername1.setFont(new java.awt.Font("Balsamiq Sans", 1, 24)); // NOI18N
         labelUsername1.setForeground(new java.awt.Color(255, 255, 255));
-        labelUsername1.setText("ID Anggota Kamu");
-        jPanel3.add(labelUsername1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, -1, -1));
+        labelUsername1.setText("NIS");
+        jPanel3.add(labelUsername1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, -1, -1));
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 0, 560, 600));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 0, 480, 600));
 
+        jPanel1.setBackground(new java.awt.Color(255, 170, 0));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabelTgl.setBackground(new java.awt.Color(71, 127, 255));
+        jLabelTgl.setFont(new java.awt.Font("Balsamiq Sans", 1, 18)); // NOI18N
+        jLabelTgl.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelTgl.setText("YYYY-MM-DD");
+        jPanel1.add(jLabelTgl, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, -1, -1));
+
+        jLabel2.setBackground(new java.awt.Color(255, 170, 0));
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tampilan/images/cover-pengunjung.jpg"))); // NOI18N
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 480, 600));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, 600));
 
         pack();
         setLocationRelativeTo(null);
@@ -156,20 +213,55 @@ public class FormDaftarPengunjung extends javax.swing.JFrame {
 
     private void buttonSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSimpanActionPerformed
         // TODO add your handling code here:
-                String sql = "INSERT INTO pengunjung VALUES (?,?,?,?)";
-        try{
-            PreparedStatement stat = conn.prepareStatement(sql);
-            stat.setString(1, textfieldIDAnggota.getText());
-            stat.setString(2, textfieldNama.getText());
-            stat.setString(3, comboboxKelas.getSelectedItem().toString());
-            stat.setString(4, textfieldTujuan.getText());
-            
-            stat.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Data berhasil disimpan. Selamat membaca!");
-            kosong();
-            textfieldIDAnggota.requestFocus();            
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Data Gagal Disimpan "+e);
+        if( textfieldNIS.getText().equals("") ||
+            textfieldNama.getText().equals("") ||
+            comboboxKelas.getSelectedItem().toString().equals("") ||
+            textfieldTujuan.getText().equals(""))
+        {
+            javax.swing.JOptionPane. showMessageDialog(null,"Data belum lengkap. \nSilahkan periksa kembali.",
+            "Error",
+            javax.swing.JOptionPane.ERROR_MESSAGE);
+        }else{  
+            try {         
+                String nisPengunjung = textfieldNIS.getText();
+
+                String sqlCekDouble = "SELECT * FROM pengunjung WHERE nis='"+nisPengunjung+"'"
+                        + " AND tgl_kunjungan='"+jLabelTgl.getText()+"'";
+
+                java.sql.Statement stat1 = conn.createStatement();
+                ResultSet hasil = stat1.executeQuery(sqlCekDouble);
+
+                if(hasil.next()){
+                    if(textfieldNIS.getText().equals(hasil.getString("nis")) &&
+                       jLabelTgl.getText().equals(hasil.getString("tgl_kunjungan")))
+                    {
+                        JOptionPane.showMessageDialog(null, "Terima kasih, Data kamu sudah tersimpan");
+                        new FormMenuPengunjung().setVisible(true);                       
+                        this.dispose();
+                    }
+                }else{
+                    String sql = "INSERT INTO pengunjung VALUES (?,?,?,?,?)";
+                    try{
+                        PreparedStatement stat = conn.prepareStatement(sql);
+                        stat.setString(1, textfieldNIS.getText());
+                        stat.setString(2, textfieldNama.getText());
+                        stat.setString(3, comboboxKelas.getSelectedItem().toString());
+                        stat.setString(4, textfieldTujuan.getText());
+                        stat.setString(5, jLabelTgl.getText());
+
+                        stat.executeUpdate();
+                        JOptionPane.showMessageDialog(null, "Data berhasil disimpan. Selamat membaca!");
+                        kosong();
+                        textfieldNIS.requestFocus();            
+                    }catch(SQLException e){
+                        JOptionPane.showMessageDialog(null, "Data Gagal Disimpan "+e);
+                    }
+                    new FormMenuPengunjung().setVisible(true);
+                    this.dispose();
+                }
+            }catch(SQLException e){
+                System.out.println("error : "+e);
+            }                  
         }
     }//GEN-LAST:event_buttonSimpanActionPerformed
 
@@ -177,9 +269,9 @@ public class FormDaftarPengunjung extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_textfieldNamaActionPerformed
 
-    private void textfieldIDAnggotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textfieldIDAnggotaActionPerformed
+    private void textfieldNISActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textfieldNISActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textfieldIDAnggotaActionPerformed
+    }//GEN-LAST:event_textfieldNISActionPerformed
 
     private void comboboxKelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboboxKelasActionPerformed
         // TODO add your handling code here:
@@ -190,7 +282,7 @@ public class FormDaftarPengunjung extends javax.swing.JFrame {
     }//GEN-LAST:event_textfieldTujuanActionPerformed
 
     protected void kosong(){
-        textfieldIDAnggota.setText("");
+        textfieldNIS.setText("");
         textfieldNama.setText("");
         comboboxKelas.setSelectedIndex(0);
     }
@@ -266,12 +358,14 @@ public class FormDaftarPengunjung extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboboxKelas;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabelTgl;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel labelUsername;
     private javax.swing.JLabel labelUsername1;
     private javax.swing.JLabel labelUsername4;
     private javax.swing.JLabel labelUsername6;
-    private javax.swing.JTextField textfieldIDAnggota;
+    private javax.swing.JTextField textfieldNIS;
     private javax.swing.JTextField textfieldNama;
     private javax.swing.JTextField textfieldTujuan;
     // End of variables declaration//GEN-END:variables

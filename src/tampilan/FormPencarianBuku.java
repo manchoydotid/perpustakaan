@@ -32,7 +32,9 @@ public class FormPencarianBuku extends javax.swing.JFrame {
         initComponents();
         kosong();
         datatable();
-//        textFieldKategoriBuku.setOpaque(true);
+        textfieldNamaFileBuku.setVisible(false);
+        textfieldKodeBuku.setVisible(false);
+        bukuRandom();
     }
         
     protected void kosong(){
@@ -68,6 +70,52 @@ public class FormPencarianBuku extends javax.swing.JFrame {
         }catch (SQLException e){                  
         }
     }
+    protected void bukuRandom(){
+        jLabel5.setText("Buku Pilihan");
+        String sql = "SELECT * FROM buku ORDER BY judul_buku DESC LIMIT 1";
+        try{
+            java.sql.Statement stat = conn.createStatement();
+            ResultSet hasil = stat.executeQuery(sql);
+            while(hasil.next()){
+                String a = hasil.getString("kategori_buku");
+                String b = hasil.getString("kode_buku");
+                String c = hasil.getString("judul_buku");
+                String d = hasil.getString("pengarang");
+                String e = hasil.getString("penerbit");
+                String f = hasil.getString("tahun_terbit");
+                String g = hasil.getString("kode_rak");
+                String h = hasil.getString("jumlah");
+                String i = hasil.getString("image");
+                 
+                textFieldKategoriBuku.setText(a);
+                textfieldKodeBuku.setText(b);
+                textfieldJudul.setText("<html><center>"+c+"</center></html>");
+                textfieldPengarang.setText(d);
+                textfieldPenerbit.setText(e);
+                textfieldTahunTerbit.setText(f);
+                textfieldKodeRak.setText(g);
+                textfieldJumlah.setText(h);
+                textfieldNamaFileBuku.setText(i);   
+      
+                //Untuk Ambil Gambar dari folder Image yang namanya ada di database
+                try {
+                    Toolkit toolkit=Toolkit.getDefaultToolkit();
+
+                    String path=new File(".").getCanonicalPath();
+
+                    Image image=toolkit.getImage(path+"/image/"+i); //mengambil gambar dari folder image
+                    Image imagedResized=image.getScaledInstance(140, 170, Image.SCALE_DEFAULT); //resize foto sesuai ukuran jlabel
+                    ImageIcon icon=new ImageIcon(imagedResized);
+                    jLabelGambar.setIcon(icon); // memasang gambar pada jlabel
+                }catch (IOException ex) {
+                            Logger.getLogger(FormInputBuku.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }catch (SQLException e)     {
+            
+        }
+ 
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -80,7 +128,6 @@ public class FormPencarianBuku extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         labelJumlah = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         textfieldJudul = new javax.swing.JLabel();
         textfieldPengarang = new javax.swing.JLabel();
         textfieldPenerbit = new javax.swing.JLabel();
@@ -94,6 +141,7 @@ public class FormPencarianBuku extends javax.swing.JFrame {
         labelTahunTerbit1 = new javax.swing.JLabel();
         textfieldKodeBuku = new javax.swing.JLabel();
         labelTahunTerbit2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableBuku = new javax.swing.JTable();
@@ -101,6 +149,7 @@ public class FormPencarianBuku extends javax.swing.JFrame {
         buttonCari = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        buttonBackHome = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Input Data Buku");
@@ -111,42 +160,35 @@ public class FormPencarianBuku extends javax.swing.JFrame {
         jPanel2.setPreferredSize(new java.awt.Dimension(300, 600));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        labelJumlah.setFont(new java.awt.Font("Balsamiq Sans", 0, 12)); // NOI18N
+        labelJumlah.setFont(new java.awt.Font("Balsamiq Sans", 1, 12)); // NOI18N
         labelJumlah.setForeground(new java.awt.Color(102, 102, 102));
         labelJumlah.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         labelJumlah.setText("Jumlah");
-        jPanel2.add(labelJumlah, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 500, 120, 25));
-
-        jLabel3.setBackground(new java.awt.Color(71, 127, 255));
-        jLabel3.setFont(new java.awt.Font("Balsamiq Sans", 1, 21)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(246, 93, 78));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Detail Buku");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, -1, -1));
+        jPanel2.add(labelJumlah, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 500, 170, 25));
 
         textfieldJudul.setFont(new java.awt.Font("Balsamiq Sans", 1, 24)); // NOI18N
         textfieldJudul.setForeground(new java.awt.Color(51, 51, 51));
         textfieldJudul.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         textfieldJudul.setText("Judul");
-        jPanel2.add(textfieldJudul, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, 320, -1));
+        jPanel2.add(textfieldJudul, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 320, 50));
 
         textfieldPengarang.setFont(new java.awt.Font("Balsamiq Sans", 0, 14)); // NOI18N
         textfieldPengarang.setForeground(new java.awt.Color(51, 51, 51));
         textfieldPengarang.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         textfieldPengarang.setText("Pengarang");
-        jPanel2.add(textfieldPengarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, 320, -1));
+        jPanel2.add(textfieldPengarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 320, -1));
 
-        textfieldPenerbit.setFont(new java.awt.Font("Balsamiq Sans", 0, 18)); // NOI18N
+        textfieldPenerbit.setFont(new java.awt.Font("Balsamiq Sans", 1, 18)); // NOI18N
         textfieldPenerbit.setForeground(new java.awt.Color(51, 51, 51));
         textfieldPenerbit.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         textfieldPenerbit.setText("Penerbit");
-        jPanel2.add(textfieldPenerbit, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 450, 120, -1));
+        jPanel2.add(textfieldPenerbit, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 450, 170, -1));
 
-        labelJumlah1.setFont(new java.awt.Font("Balsamiq Sans", 0, 12)); // NOI18N
+        labelJumlah1.setFont(new java.awt.Font("Balsamiq Sans", 1, 12)); // NOI18N
         labelJumlah1.setForeground(new java.awt.Color(102, 102, 102));
         labelJumlah1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         labelJumlah1.setText("Kode Rak");
-        jPanel2.add(labelJumlah1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 500, 120, 25));
+        jPanel2.add(labelJumlah1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 500, 180, 25));
 
         textFieldKategoriBuku.setBackground(new java.awt.Color(204, 204, 204));
         textFieldKategoriBuku.setFont(new java.awt.Font("Balsamiq Sans", 1, 12)); // NOI18N
@@ -155,23 +197,23 @@ public class FormPencarianBuku extends javax.swing.JFrame {
         textFieldKategoriBuku.setText("Kategori");
         jPanel2.add(textFieldKategoriBuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 280, 140, 30));
 
-        textfieldTahunTerbit.setFont(new java.awt.Font("Balsamiq Sans", 0, 18)); // NOI18N
+        textfieldTahunTerbit.setFont(new java.awt.Font("Balsamiq Sans", 1, 18)); // NOI18N
         textfieldTahunTerbit.setForeground(new java.awt.Color(51, 51, 51));
         textfieldTahunTerbit.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         textfieldTahunTerbit.setText("Tahun Terbit");
-        jPanel2.add(textfieldTahunTerbit, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 450, 120, -1));
+        jPanel2.add(textfieldTahunTerbit, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 450, 180, -1));
 
-        textfieldKodeRak.setFont(new java.awt.Font("Balsamiq Sans", 0, 18)); // NOI18N
+        textfieldKodeRak.setFont(new java.awt.Font("Balsamiq Sans", 1, 18)); // NOI18N
         textfieldKodeRak.setForeground(new java.awt.Color(51, 51, 51));
         textfieldKodeRak.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         textfieldKodeRak.setText("Kode Rak");
-        jPanel2.add(textfieldKodeRak, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 530, 120, -1));
+        jPanel2.add(textfieldKodeRak, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 530, 180, -1));
 
-        textfieldJumlah.setFont(new java.awt.Font("Balsamiq Sans", 0, 18)); // NOI18N
+        textfieldJumlah.setFont(new java.awt.Font("Balsamiq Sans", 1, 18)); // NOI18N
         textfieldJumlah.setForeground(new java.awt.Color(51, 51, 51));
         textfieldJumlah.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         textfieldJumlah.setText("Jumlah");
-        jPanel2.add(textfieldJumlah, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 530, 120, -1));
+        jPanel2.add(textfieldJumlah, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 530, 170, -1));
 
         jLabelGambar.setOpaque(true);
         jPanel2.add(jLabelGambar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 140, 170));
@@ -179,11 +221,11 @@ public class FormPencarianBuku extends javax.swing.JFrame {
         textfieldNamaFileBuku.setText("NamaFileBuku");
         jPanel2.add(textfieldNamaFileBuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 210, -1, -1));
 
-        labelTahunTerbit1.setFont(new java.awt.Font("Balsamiq Sans", 0, 12)); // NOI18N
+        labelTahunTerbit1.setFont(new java.awt.Font("Balsamiq Sans", 1, 12)); // NOI18N
         labelTahunTerbit1.setForeground(new java.awt.Color(102, 102, 102));
         labelTahunTerbit1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         labelTahunTerbit1.setText("Tahun Terbit");
-        jPanel2.add(labelTahunTerbit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 420, 120, 25));
+        jPanel2.add(labelTahunTerbit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 420, 180, 25));
 
         textfieldKodeBuku.setFont(new java.awt.Font("Balsamiq Sans", 0, 12)); // NOI18N
         textfieldKodeBuku.setForeground(new java.awt.Color(246, 93, 78));
@@ -191,12 +233,19 @@ public class FormPencarianBuku extends javax.swing.JFrame {
         textfieldKodeBuku.setText("Tahun Terbit");
         jPanel2.add(textfieldKodeBuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 160, 150, -1));
 
-        labelTahunTerbit2.setFont(new java.awt.Font("Balsamiq Sans", 0, 12)); // NOI18N
+        labelTahunTerbit2.setFont(new java.awt.Font("Balsamiq Sans", 1, 12)); // NOI18N
         labelTahunTerbit2.setForeground(new java.awt.Color(102, 102, 102));
         labelTahunTerbit2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         labelTahunTerbit2.setText("Penerbit");
         labelTahunTerbit2.setPreferredSize(new java.awt.Dimension(100, 23));
-        jPanel2.add(labelTahunTerbit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 420, 120, 25));
+        jPanel2.add(labelTahunTerbit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 420, 160, 25));
+
+        jLabel5.setBackground(new java.awt.Color(71, 127, 255));
+        jLabel5.setFont(new java.awt.Font("Balsamiq Sans", 1, 21)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(246, 93, 78));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Detail Buku");
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, -1, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 420, 600));
 
@@ -253,7 +302,7 @@ public class FormPencarianBuku extends javax.swing.JFrame {
                 buttonCariActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonCari, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 270, 70, 30));
+        jPanel1.add(buttonCari, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 280, 70, 30));
 
         jLabel6.setBackground(new java.awt.Color(71, 127, 255));
         jLabel6.setFont(new java.awt.Font("Balsamiq Sans", 1, 18)); // NOI18N
@@ -267,6 +316,19 @@ public class FormPencarianBuku extends javax.swing.JFrame {
         jLabel4.setText("PENCARIAN BUKU");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, -1, -1));
 
+        buttonBackHome.setBackground(new java.awt.Color(9, 110, 59));
+        buttonBackHome.setFont(new java.awt.Font("Balsamiq Sans", 1, 18)); // NOI18N
+        buttonBackHome.setForeground(new java.awt.Color(255, 255, 255));
+        buttonBackHome.setText("Kembali ke Menu");
+        buttonBackHome.setBorder(null);
+        buttonBackHome.setPreferredSize(new java.awt.Dimension(75, 30));
+        buttonBackHome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBackHomeActionPerformed(evt);
+            }
+        });
+        jPanel1.add(buttonBackHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 550, 170, 30));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 600));
 
         pack();
@@ -275,7 +337,7 @@ public class FormPencarianBuku extends javax.swing.JFrame {
 
     private void tableBukuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableBukuMouseClicked
         // TODO add your handling code here:
-
+        jLabel5.setText("Detail Buku");
         int bar = tableBuku.getSelectedRow();
         String kode_buku = tabmode.getValueAt(bar, 0).toString();
 
@@ -296,7 +358,7 @@ public class FormPencarianBuku extends javax.swing.JFrame {
                  
                 textFieldKategoriBuku.setText(a);
                 textfieldKodeBuku.setText(b);
-                textfieldJudul.setText(c);
+                textfieldJudul.setText("<html><center>"+c+"</center></html>");
                 textfieldPengarang.setText(d);
                 textfieldPenerbit.setText(e);
                 textfieldTahunTerbit.setText(f);
@@ -354,6 +416,12 @@ public class FormPencarianBuku extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buttonCariActionPerformed
 
+    private void buttonBackHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBackHomeActionPerformed
+        // TODO add your handling code here:
+        new FormMenuPengunjung().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_buttonBackHomeActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -405,9 +473,10 @@ public class FormPencarianBuku extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonBackHome;
     private javax.swing.JButton buttonCari;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabelGambar;
     private javax.swing.JPanel jPanel1;

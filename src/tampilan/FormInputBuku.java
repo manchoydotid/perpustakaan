@@ -18,6 +18,9 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import koneksi.koneksi;
 import org.apache.commons.io.FileUtils;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 
 /**
  *
@@ -32,11 +35,35 @@ public class FormInputBuku extends javax.swing.JFrame {
     /**
      * Creates new form FormRegistrasi
      */
+   
     public FormInputBuku() {
         initComponents();
         datatable();
+        textfieldKodeBuku.setDocument(new JTextFieldLimit(10) );
     }
-        
+  
+    class JTextFieldLimit extends PlainDocument {
+        private int limit;
+        JTextFieldLimit(int limit) {
+          super();
+          this.limit = limit;
+        }
+
+        JTextFieldLimit(int limit, boolean upper) {
+          super();
+          this.limit = limit;
+        }
+
+        public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException {
+          if (str == null)
+            return;
+
+          if ((getLength() + str.length()) <= limit) {
+            super.insertString(offset, str, attr);
+          }
+        }
+    }
+    
     protected void aktif(){
         textfieldKodeBuku.setEnabled(true);
         textfieldJudul.setEnabled(true);
@@ -127,9 +154,17 @@ public class FormInputBuku extends javax.swing.JFrame {
         textfieldCariJudulBuku = new javax.swing.JTextField();
         buttonCari = new javax.swing.JButton();
         buttonCancel = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenuMaster = new javax.swing.JMenu();
+        jMenuItemInputDataBuku = new javax.swing.JMenuItem();
+        jMenuItemRegistrasiAnggota = new javax.swing.JMenuItem();
+        jMenuItemRegistrasiPetugas = new javax.swing.JMenuItem();
+        jMenuTransaksi = new javax.swing.JMenu();
+        jMenuItemPeminjamanBuku = new javax.swing.JMenuItem();
+        jMenuItemPengembalianBuku = new javax.swing.JMenuItem();
+        jMenuLaporan = new javax.swing.JMenu();
+        jMenuLogout = new javax.swing.JMenu();
+        jMenuItemLogout = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Input Data Buku");
@@ -251,7 +286,7 @@ public class FormInputBuku extends javax.swing.JFrame {
         buttonSave.setBackground(new java.awt.Color(9, 110, 59));
         buttonSave.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonSave.setForeground(new java.awt.Color(255, 255, 255));
-        buttonSave.setText("Save");
+        buttonSave.setText("Simpan");
         buttonSave.setBorder(null);
         buttonSave.setPreferredSize(new java.awt.Dimension(75, 30));
         buttonSave.addActionListener(new java.awt.event.ActionListener() {
@@ -264,7 +299,7 @@ public class FormInputBuku extends javax.swing.JFrame {
         buttonEdit.setBackground(new java.awt.Color(9, 110, 59));
         buttonEdit.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonEdit.setForeground(new java.awt.Color(255, 255, 255));
-        buttonEdit.setText("Edit");
+        buttonEdit.setText("Ubah");
         buttonEdit.setBorder(null);
         buttonEdit.setPreferredSize(new java.awt.Dimension(75, 30));
         buttonEdit.addActionListener(new java.awt.event.ActionListener() {
@@ -277,7 +312,7 @@ public class FormInputBuku extends javax.swing.JFrame {
         buttonDelete.setBackground(new java.awt.Color(9, 110, 59));
         buttonDelete.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonDelete.setForeground(new java.awt.Color(255, 255, 255));
-        buttonDelete.setText("Delete");
+        buttonDelete.setText("Hapus");
         buttonDelete.setBorder(null);
         buttonDelete.setPreferredSize(new java.awt.Dimension(75, 30));
         buttonDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -285,12 +320,12 @@ public class FormInputBuku extends javax.swing.JFrame {
                 buttonDeleteActionPerformed(evt);
             }
         });
-        jPanel2.add(buttonDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 470, -1, -1));
+        jPanel2.add(buttonDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 470, -1, -1));
 
         buttonClear.setBackground(new java.awt.Color(9, 110, 59));
         buttonClear.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonClear.setForeground(new java.awt.Color(255, 255, 255));
-        buttonClear.setText("Clear");
+        buttonClear.setText("Bersihkan");
         buttonClear.setBorder(null);
         buttonClear.setPreferredSize(new java.awt.Dimension(75, 30));
         buttonClear.addActionListener(new java.awt.event.ActionListener() {
@@ -298,7 +333,7 @@ public class FormInputBuku extends javax.swing.JFrame {
                 buttonClearActionPerformed(evt);
             }
         });
-        jPanel2.add(buttonClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 470, -1, -1));
+        jPanel2.add(buttonClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 470, 80, -1));
 
         labelTitle2.setBackground(new java.awt.Color(71, 127, 255));
         labelTitle2.setFont(new java.awt.Font("Montserrat SemiBold", 1, 24)); // NOI18N
@@ -336,7 +371,7 @@ public class FormInputBuku extends javax.swing.JFrame {
         });
         jPanel2.add(textfieldNamaFileBuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 350, 140, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 510, 570));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 570));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -385,7 +420,7 @@ public class FormInputBuku extends javax.swing.JFrame {
         buttonCari.setBackground(new java.awt.Color(9, 110, 59));
         buttonCari.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonCari.setForeground(new java.awt.Color(255, 255, 255));
-        buttonCari.setText("Search");
+        buttonCari.setText("Cari");
         buttonCari.setBorder(null);
         buttonCari.setPreferredSize(new java.awt.Dimension(75, 30));
         buttonCari.addActionListener(new java.awt.event.ActionListener() {
@@ -398,7 +433,7 @@ public class FormInputBuku extends javax.swing.JFrame {
         buttonCancel.setBackground(new java.awt.Color(9, 110, 59));
         buttonCancel.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonCancel.setForeground(new java.awt.Color(9, 110, 59));
-        buttonCancel.setText("Cancel");
+        buttonCancel.setText("Batal");
         buttonCancel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(71, 127, 255)));
         buttonCancel.setContentAreaFilled(false);
         buttonCancel.setPreferredSize(new java.awt.Dimension(75, 30));
@@ -409,24 +444,134 @@ public class FormInputBuku extends javax.swing.JFrame {
         });
         jPanel1.add(buttonCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 500, 570));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 0, 500, 570));
 
-        jPanel3.setBackground(new java.awt.Color(212, 210, 212));
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jMenuBar1.setBackground(new java.awt.Color(245, 247, 250));
+        jMenuBar1.setPreferredSize(new java.awt.Dimension(76, 40));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tampilan/images/cancel.png"))); // NOI18N
-        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel3MouseClicked(evt);
+        jMenuMaster.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuMaster.setForeground(new java.awt.Color(51, 51, 51));
+        jMenuMaster.setText("Master");
+        jMenuMaster.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
+        jMenuMaster.setIconTextGap(20);
+        jMenuMaster.setMargin(new java.awt.Insets(2, 20, 2, 20));
+
+        jMenuItemInputDataBuku.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItemInputDataBuku.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jMenuItemInputDataBuku.setText("Input Data Buku");
+        jMenuItemInputDataBuku.setPreferredSize(new java.awt.Dimension(280, 30));
+        jMenuItemInputDataBuku.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemInputDataBukuActionPerformed(evt);
             }
         });
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 10, -1, -1));
+        jMenuMaster.add(jMenuItemInputDataBuku);
 
-        jLabel1.setBackground(new java.awt.Color(212, 210, 212));
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tampilan/images/bar.png"))); // NOI18N
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jMenuItemRegistrasiAnggota.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItemRegistrasiAnggota.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jMenuItemRegistrasiAnggota.setText("Registrasi Anggota");
+        jMenuItemRegistrasiAnggota.setPreferredSize(new java.awt.Dimension(280, 30));
+        jMenuItemRegistrasiAnggota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemRegistrasiAnggotaActionPerformed(evt);
+            }
+        });
+        jMenuMaster.add(jMenuItemRegistrasiAnggota);
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 30));
+        jMenuItemRegistrasiPetugas.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItemRegistrasiPetugas.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jMenuItemRegistrasiPetugas.setText("Registrasi Petugas");
+        jMenuItemRegistrasiPetugas.setPreferredSize(new java.awt.Dimension(280, 30));
+        jMenuItemRegistrasiPetugas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemRegistrasiPetugasActionPerformed(evt);
+            }
+        });
+        jMenuMaster.add(jMenuItemRegistrasiPetugas);
+
+        jMenuBar1.add(jMenuMaster);
+
+        jMenuTransaksi.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuTransaksi.setForeground(new java.awt.Color(51, 51, 51));
+        jMenuTransaksi.setText("Transaksi");
+        jMenuTransaksi.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
+        jMenuTransaksi.setIconTextGap(20);
+        jMenuTransaksi.setMargin(new java.awt.Insets(2, 20, 2, 20));
+        jMenuTransaksi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuTransaksiMouseClicked(evt);
+            }
+        });
+        jMenuTransaksi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuTransaksiActionPerformed(evt);
+            }
+        });
+
+        jMenuItemPeminjamanBuku.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItemPeminjamanBuku.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jMenuItemPeminjamanBuku.setText("Peminjaman");
+        jMenuItemPeminjamanBuku.setPreferredSize(new java.awt.Dimension(280, 30));
+        jMenuItemPeminjamanBuku.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemPeminjamanBukuActionPerformed(evt);
+            }
+        });
+        jMenuTransaksi.add(jMenuItemPeminjamanBuku);
+
+        jMenuItemPengembalianBuku.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItemPengembalianBuku.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jMenuItemPengembalianBuku.setText("Pengembalian");
+        jMenuItemPengembalianBuku.setPreferredSize(new java.awt.Dimension(280, 30));
+        jMenuItemPengembalianBuku.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemPengembalianBukuActionPerformed(evt);
+            }
+        });
+        jMenuTransaksi.add(jMenuItemPengembalianBuku);
+
+        jMenuBar1.add(jMenuTransaksi);
+
+        jMenuLaporan.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuLaporan.setForeground(new java.awt.Color(51, 51, 51));
+        jMenuLaporan.setText("Laporan");
+        jMenuLaporan.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
+        jMenuLaporan.setIconTextGap(20);
+        jMenuLaporan.setMargin(new java.awt.Insets(2, 20, 2, 20));
+        jMenuLaporan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuLaporanMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenuLaporan);
+
+        jMenuLogout.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuLogout.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jMenuLogout.setForeground(new java.awt.Color(51, 51, 51));
+        jMenuLogout.setText("Exit");
+        jMenuLogout.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
+        jMenuLogout.setIconTextGap(40);
+        jMenuLogout.setMargin(new java.awt.Insets(2, 20, 2, 20));
+        jMenuLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuLogoutActionPerformed(evt);
+            }
+        });
+
+        jMenuItemLogout.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItemLogout.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jMenuItemLogout.setText("Logout");
+        jMenuItemLogout.setPreferredSize(new java.awt.Dimension(280, 30));
+        jMenuItemLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemLogoutActionPerformed(evt);
+            }
+        });
+        jMenuLogout.add(jMenuItemLogout);
+
+        jMenuBar1.add(jMenuLogout);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
         setLocationRelativeTo(null);
@@ -450,69 +595,99 @@ public class FormInputBuku extends javax.swing.JFrame {
 
     private void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditActionPerformed
         // TODO add your handling code here
-        try {
-            String sql = "UPDATE buku SET kategori_buku=?, judul_buku=?, pengarang=?, "
-                    + "penerbit=?, tahun_terbit=?, kode_rak=?, jumlah=?, image=? where kode_buku=?";
-            PreparedStatement stat = conn.prepareStatement(sql);
-            stat.setString(1, comboboxKategoriBuku.getSelectedItem().toString());
-            stat.setString(2, textfieldJudul.getText());
-            stat.setString(3, textfieldPengarang.getText());
-            stat.setString(4, textfieldPenerbit.getText());
-            stat.setString(5, textfieldTahunTerbit.getText());
-            stat.setString(6, textfieldKodeRak.getText());
-            stat.setString(7, textfieldJumlah.getText());
-            stat.setString(8, textfieldNamaFileBuku.getText());
-            stat.setString(9, textfieldKodeBuku.getText());
-                    
-            stat.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Data berhasil diubah");
-            
+        if(comboboxKategoriBuku.getSelectedItem().equals("") ||
+           textfieldJudul.getText().equals("") ||
+           textfieldPengarang.getText().equals("") ||
+           textfieldPenerbit.getText().equals("") ||
+           textfieldTahunTerbit.getText().equals("") ||
+           textfieldKodeRak.getText().equals("") ||
+           textfieldJumlah.getText().equals("") ||
+           textfieldNamaFileBuku.getText().equals("") ||
+           textfieldKodeBuku.getText().equals("")
+        ){
+            javax.swing.JOptionPane. showMessageDialog(null,"Data belum lengkap. \nSilahkan periksa kembali.",
+            "Error",
+            javax.swing.JOptionPane.ERROR_MESSAGE);
+        }else{
             try {
-                String path=new File(".").getCanonicalPath();
-                FileUtils.copyFileToDirectory(file, new File(path+"/image")); //copy file ke folder image
-            } catch (IOException ex) {
-                Logger.getLogger(FormInputBuku.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            kosong();
-            textfieldKodeBuku.requestFocus();
-            datatable();
-            
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Data Gagal Diubah "+e);
-        }        
+                String sql = "UPDATE buku SET kategori_buku=?, judul_buku=?, pengarang=?, "
+                        + "penerbit=?, tahun_terbit=?, kode_rak=?, jumlah=?, image=? where kode_buku=?";
+                PreparedStatement stat = conn.prepareStatement(sql);
+                stat.setString(1, comboboxKategoriBuku.getSelectedItem().toString());
+                stat.setString(2, textfieldJudul.getText());
+                stat.setString(3, textfieldPengarang.getText());
+                stat.setString(4, textfieldPenerbit.getText());
+                stat.setString(5, textfieldTahunTerbit.getText());
+                stat.setString(6, textfieldKodeRak.getText());
+                stat.setString(7, textfieldJumlah.getText());
+                stat.setString(8, textfieldNamaFileBuku.getText());
+                stat.setString(9, textfieldKodeBuku.getText());
+
+                stat.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Data berhasil diubah");
+
+                try {
+                    String path=new File(".").getCanonicalPath();
+                    FileUtils.copyFileToDirectory(file, new File(path+"/image")); //copy file ke folder image
+                } catch (IOException ex) {
+                    Logger.getLogger(FormInputBuku.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                kosong();
+                textfieldKodeBuku.requestFocus();
+                datatable();
+
+            }catch(SQLException e){
+                JOptionPane.showMessageDialog(null, "Data Gagal Diubah "+e);
+            } 
+        }
     }//GEN-LAST:event_buttonEditActionPerformed
 
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
         // TODO add your handling code here:
-        String sql = "INSERT INTO buku VALUES (?,?,?,?,?,?,?,?,?)";
-        try{
-            PreparedStatement stat = conn.prepareStatement(sql);
-            stat.setString(1, comboboxKategoriBuku.getSelectedItem().toString());
-            stat.setString(2, textfieldKodeBuku.getText());
-            stat.setString(3, textfieldJudul.getText());            
-            stat.setString(4, textfieldPengarang.getText());
-            stat.setString(5, textfieldPenerbit.getText());
-            stat.setString(6, textfieldTahunTerbit.getText());
-            stat.setString(7, textfieldKodeRak.getText());
-            stat.setString(8, textfieldJumlah.getText());
-            stat.setString(9, textfieldNamaFileBuku.getText());
+        if(comboboxKategoriBuku.getSelectedItem().equals("") ||
+           textfieldJudul.getText().equals("") ||
+           textfieldPengarang.getText().equals("") ||
+           textfieldPenerbit.getText().equals("") ||
+           textfieldTahunTerbit.getText().equals("") ||
+           textfieldKodeRak.getText().equals("") ||
+           textfieldJumlah.getText().equals("") ||
+           textfieldNamaFileBuku.getText().equals("") ||
+           textfieldKodeBuku.getText().equals("")
+        ){
+            javax.swing.JOptionPane. showMessageDialog(null,"Data belum lengkap. \nSilahkan periksa kembali.",
+            "Error",
+            javax.swing.JOptionPane.ERROR_MESSAGE);
+        }else{
+            String sql = "INSERT INTO buku VALUES (?,?,?,?,?,?,?,?,?)";
+            try{
+                PreparedStatement stat = conn.prepareStatement(sql);
+                stat.setString(1, comboboxKategoriBuku.getSelectedItem().toString());
+                stat.setString(2, textfieldKodeBuku.getText());
+                stat.setString(3, textfieldJudul.getText());            
+                stat.setString(4, textfieldPengarang.getText());
+                stat.setString(5, textfieldPenerbit.getText());
+                stat.setString(6, textfieldTahunTerbit.getText());
+                stat.setString(7, textfieldKodeRak.getText());
+                stat.setString(8, textfieldJumlah.getText());
+                stat.setString(9, textfieldNamaFileBuku.getText());
 
-            stat.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Data Berhasil Disimpan");
-            
-            try {
-                String path=new File(".").getCanonicalPath();
-                FileUtils.copyFileToDirectory(file, new File(path+"/image")); //copy file ke folder image
-            } catch (IOException ex) {
-                Logger.getLogger(FormInputBuku.class.getName()).log(Level.SEVERE, null, ex);
+                stat.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Data Berhasil Disimpan");
+
+                try {
+                    String path=new File(".").getCanonicalPath();
+                    FileUtils.copyFileToDirectory(file, new File(path+"/image")); //copy file ke folder image
+                } catch (IOException ex) {
+                    Logger.getLogger(FormInputBuku.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                kosong();
+                textfieldKodeBuku.requestFocus();
+                datatable();
+            }catch(SQLException e){
+                JOptionPane.showMessageDialog(null, "Data Gagal Disimpan "+e);
             }
-            
-            kosong();
-            textfieldKodeBuku.requestFocus();
-            datatable();
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Data Gagal Disimpan "+e);
         }
     }                                     
 
@@ -640,12 +815,6 @@ public class FormInputBuku extends javax.swing.JFrame {
         textfieldCariJudulBuku.setText("");
     }//GEN-LAST:event_buttonCancelActionPerformed
 
-    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-        // TODO add your handling code here:
-        new FormMenuUtama().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jLabel3MouseClicked
-
     private void jButtonPilihGambarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPilihGambarActionPerformed
         // TODO add your handling code here:
         jfc=new JFileChooser();
@@ -666,6 +835,68 @@ public class FormInputBuku extends javax.swing.JFrame {
     private void textfieldNamaFileBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textfieldNamaFileBukuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textfieldNamaFileBukuActionPerformed
+
+    private void jMenuItemInputDataBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemInputDataBukuActionPerformed
+        // TODO add your handling code here:
+        new FormInputBuku().setVisible(true);
+        this.dispose();
+
+    }//GEN-LAST:event_jMenuItemInputDataBukuActionPerformed
+
+    private void jMenuItemRegistrasiAnggotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistrasiAnggotaActionPerformed
+        // TODO add your handling code here:
+        new FormRegistrasi().setVisible(true);
+        this.dispose();
+
+    }//GEN-LAST:event_jMenuItemRegistrasiAnggotaActionPerformed
+
+    private void jMenuItemRegistrasiPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistrasiPetugasActionPerformed
+        // TODO add your handling code here:
+        new FormPetugas().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItemRegistrasiPetugasActionPerformed
+
+    private void jMenuItemPeminjamanBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPeminjamanBukuActionPerformed
+        // TODO add your handling code here:
+        new FormPeminjamanBuku().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItemPeminjamanBukuActionPerformed
+
+    private void jMenuItemPengembalianBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPengembalianBukuActionPerformed
+        // TODO add your handling code here:
+        new FormPengembalianBuku().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItemPengembalianBukuActionPerformed
+
+    private void jMenuTransaksiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuTransaksiMouseClicked
+        // TODO add your handling code here:
+        new FormPeminjamanBuku().setVisible(true);
+        this.dispose();
+
+    }//GEN-LAST:event_jMenuTransaksiMouseClicked
+
+    private void jMenuTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTransaksiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuTransaksiActionPerformed
+
+    private void jMenuLaporanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuLaporanMouseClicked
+        // TODO add your handling code here:
+        new FormMasterLaporan().setVisible(true);
+        this.dispose();
+
+    }//GEN-LAST:event_jMenuLaporanMouseClicked
+
+    private void jMenuItemLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemLogoutActionPerformed
+        // TODO add your handling code here:
+        new FormLogin().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItemLogoutActionPerformed
+
+    private void jMenuLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuLogoutActionPerformed
+        // TODO add your handling code here:
+        new FormLogin().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuLogoutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -718,12 +949,20 @@ public class FormInputBuku extends javax.swing.JFrame {
     private javax.swing.JButton buttonSave;
     private javax.swing.JComboBox<String> comboboxKategoriBuku;
     private javax.swing.JButton jButtonPilihGambar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelGambar;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItemInputDataBuku;
+    private javax.swing.JMenuItem jMenuItemLogout;
+    private javax.swing.JMenuItem jMenuItemPeminjamanBuku;
+    private javax.swing.JMenuItem jMenuItemPengembalianBuku;
+    private javax.swing.JMenuItem jMenuItemRegistrasiAnggota;
+    private javax.swing.JMenuItem jMenuItemRegistrasiPetugas;
+    private javax.swing.JMenu jMenuLaporan;
+    private javax.swing.JMenu jMenuLogout;
+    private javax.swing.JMenu jMenuMaster;
+    private javax.swing.JMenu jMenuTransaksi;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelEdisi;
     private javax.swing.JLabel labelJudul;

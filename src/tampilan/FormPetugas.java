@@ -142,7 +142,7 @@ public final class FormPetugas extends javax.swing.JFrame {
         buttonSave.setBackground(new java.awt.Color(9, 110, 59));
         buttonSave.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonSave.setForeground(new java.awt.Color(255, 255, 255));
-        buttonSave.setText("Save");
+        buttonSave.setText("Simpan");
         buttonSave.setBorder(null);
         buttonSave.setPreferredSize(new java.awt.Dimension(75, 30));
         buttonSave.addActionListener(new java.awt.event.ActionListener() {
@@ -155,7 +155,7 @@ public final class FormPetugas extends javax.swing.JFrame {
         buttonEdit.setBackground(new java.awt.Color(9, 110, 59));
         buttonEdit.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonEdit.setForeground(new java.awt.Color(255, 255, 255));
-        buttonEdit.setText("Edit");
+        buttonEdit.setText("Ubah");
         buttonEdit.setBorder(null);
         buttonEdit.setPreferredSize(new java.awt.Dimension(75, 30));
         buttonEdit.addActionListener(new java.awt.event.ActionListener() {
@@ -168,7 +168,7 @@ public final class FormPetugas extends javax.swing.JFrame {
         buttonDelete.setBackground(new java.awt.Color(9, 110, 59));
         buttonDelete.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonDelete.setForeground(new java.awt.Color(255, 255, 255));
-        buttonDelete.setText("Delete");
+        buttonDelete.setText("Hapus");
         buttonDelete.setBorder(null);
         buttonDelete.setPreferredSize(new java.awt.Dimension(75, 30));
         buttonDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -181,7 +181,7 @@ public final class FormPetugas extends javax.swing.JFrame {
         buttonClear.setBackground(new java.awt.Color(9, 110, 59));
         buttonClear.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonClear.setForeground(new java.awt.Color(255, 255, 255));
-        buttonClear.setText("Clear");
+        buttonClear.setText("Bersihkan");
         buttonClear.setBorder(null);
         buttonClear.setPreferredSize(new java.awt.Dimension(75, 30));
         buttonClear.addActionListener(new java.awt.event.ActionListener() {
@@ -189,7 +189,7 @@ public final class FormPetugas extends javax.swing.JFrame {
                 buttonClearActionPerformed(evt);
             }
         });
-        jPanel2.add(buttonClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 330, -1, -1));
+        jPanel2.add(buttonClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 330, 80, -1));
 
         labelNIS1.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
         labelNIS1.setForeground(new java.awt.Color(153, 153, 153));
@@ -213,7 +213,7 @@ public final class FormPetugas extends javax.swing.JFrame {
         buttonCari.setBackground(new java.awt.Color(9, 110, 59));
         buttonCari.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonCari.setForeground(new java.awt.Color(255, 255, 255));
-        buttonCari.setText("Search");
+        buttonCari.setText("Cari");
         buttonCari.setBorder(null);
         buttonCari.setPreferredSize(new java.awt.Dimension(75, 30));
         buttonCari.addActionListener(new java.awt.event.ActionListener() {
@@ -268,7 +268,7 @@ public final class FormPetugas extends javax.swing.JFrame {
         buttonCancel.setBackground(new java.awt.Color(9, 110, 59));
         buttonCancel.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
         buttonCancel.setForeground(new java.awt.Color(9, 110, 59));
-        buttonCancel.setText("Cancel");
+        buttonCancel.setText("Batal");
         buttonCancel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(9, 110, 59)));
         buttonCancel.setContentAreaFilled(false);
         buttonCancel.setPreferredSize(new java.awt.Dimension(75, 30));
@@ -312,23 +312,32 @@ public final class FormPetugas extends javax.swing.JFrame {
 
     private void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditActionPerformed
         // TODO add your handling code here
-        try {
-            String sql = "UPDATE petugas SET nama_petugas=?, password=? where username=?";
-            PreparedStatement stat = conn.prepareStatement(sql);
-            stat.setString(1, textfieldNamaPetugas.getText());            
-            stat.setString(2, textfieldPasswordPetugas.getText());
-            stat.setString(3, textfieldUsernamePetugas.getText());
+        if(  textfieldNamaPetugas.getText().equals("") ||       
+             textfieldPasswordPetugas.getText().equals("") ||
+             textfieldUsernamePetugas.getText().equals("")
+        ){
+            javax.swing.JOptionPane. showMessageDialog(null,"Data belum lengkap. \nSilahkan periksa kembali.",
+            "Error",
+            javax.swing.JOptionPane.ERROR_MESSAGE);              
+        }else{
+            try {
+                String sql = "UPDATE petugas SET nama_petugas=?, password=? where username=?";
+                PreparedStatement stat = conn.prepareStatement(sql);
+                stat.setString(1, textfieldNamaPetugas.getText());            
+                stat.setString(2, textfieldPasswordPetugas.getText());
+                stat.setString(3, textfieldUsernamePetugas.getText());
 
 
-            stat.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Data berhasil diubah");
-            kosong();
-            textfieldNamaPetugas.requestFocus();
-            datatable();
-            
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Data Gagal Diubah "+e);
-        }        
+                stat.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Data berhasil diubah");
+                kosong();
+                textfieldNamaPetugas.requestFocus();
+                datatable();
+
+            }catch(SQLException e){
+                JOptionPane.showMessageDialog(null, "Data Gagal Diubah "+e);
+            }    
+        }
     }//GEN-LAST:event_buttonEditActionPerformed
 
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
@@ -337,15 +346,20 @@ public final class FormPetugas extends javax.swing.JFrame {
         String username = textfieldUsernamePetugas.getText();
         String password = textfieldPasswordPetugas.getText();
         
-        //Validasi form tidak kosong
-        if(nama != null && username != null && password != null){
-            System.out.println(nama);
+        if(  nama.equals("") ||       
+             password.equals("") ||
+             username.equals("")
+        ){
+            javax.swing.JOptionPane. showMessageDialog(null,"Data belum lengkap. \nSilahkan periksa kembali.",
+            "Error",
+            javax.swing.JOptionPane.ERROR_MESSAGE);              
+        }else{
             try{                
                 //Cek username tidak boleh sama
                 String sqlCheck = "SELECT username FROM petugas WHERE username='"+ username +"'";
                 java.sql.Statement stat = conn.createStatement();
                 ResultSet hasil = stat.executeQuery(sqlCheck);
-                
+
                 if(hasil.next()){
                     JOptionPane.showMessageDialog(null, "Username sudah terdaftar!");
                 }else{
@@ -368,8 +382,6 @@ public final class FormPetugas extends javax.swing.JFrame {
             }catch(Exception e){
                 JOptionPane.showMessageDialog(this, e.getMessage());
             }
-        }else{
-            JOptionPane.showMessageDialog(null, "Periksa kembali form isisan anda!");
         }
     }                                     
 
