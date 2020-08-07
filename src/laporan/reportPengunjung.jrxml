@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dd1217ec-24b1-4d87-8e9a-4c3e3f3d6573">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     pengunjung.`nis` AS pengunjung_nis,
+     pengunjung.`nama` AS pengunjung_nama,
+     pengunjung.`kelas` AS pengunjung_kelas,
+     pengunjung.`tgl_kunjungan` AS pengunjung_tgl_kunjungan
+FROM
+     `pengunjung` pengunjung]]>
+	</queryString>
+	<field name="pengunjung_nis" class="java.lang.String"/>
+	<field name="pengunjung_nama" class="java.lang.String"/>
+	<field name="pengunjung_kelas" class="java.lang.String"/>
+	<field name="pengunjung_tgl_kunjungan" class="java.sql.Date"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="87" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="30" width="802" height="30" forecolor="#096E3B" uuid="cc9ea5f5-8fd4-47a3-acab-12c2f436c9d9"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ASSA'ADIYAH ATTAHIRIYAH]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="60" width="802" height="19" forecolor="#096E3B" uuid="6315c0ca-7f50-4444-a51c-43ce35e543c4"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Jalan Raya Ciracas No. 7 Ciracas, Jakarta Timur Telp.8702327]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="802" height="30" forecolor="#096E3B" uuid="880f70df-c88d-479f-9b16-469a38dad8c0"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MADRASAH IBTIDAIYAH]]></text>
+			</staticText>
+			<image>
+				<reportElement x="121" y="0" width="88" height="79" uuid="f44b13d5-2345-4780-aff0-de047f2946f1"/>
+				<imageExpression><![CDATA["C:\\Users\\BrownBox\\Documents\\NetBeansProjects\\Nurmansyah\\src\\tampilan\\images\\logo_mi.gif"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="0" y="83" width="802" height="2" forecolor="#096E3B" uuid="0dff2cc9-1b3c-48bb-a8a3-4e97fd0feb87"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="802" height="30" forecolor="#333333" uuid="80554ba5-2ba3-4798-a940-18b91b053ecb"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Laporan Data Pengunjung]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="544" y="1" width="73" height="20" uuid="517fc5a7-19e7-426e-a890-1556d29a0025"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tanggal Kunjungan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="443" y="1" width="101" height="20" uuid="bbc5f3f4-7036-433e-89d1-e9b78449902e"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kelas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="243" y="0" width="200" height="20" uuid="51e44c22-13c5-41b2-95ea-2c40456335b8"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nama Pengunjung]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="118" y="0" width="125" height="20" uuid="29a510ad-064b-4fae-8962-f6582bc6adf3"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NIS Pengunjung]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="544" y="1" width="25" height="20" uuid="1a43f144-5b05-46a0-8406-03b799328b68"/>
+				<textFieldExpression><![CDATA[$F{pengunjung_tgl_kunjungan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="118" y="1" width="125" height="20" uuid="a82d55dc-b4b7-46c9-8cb2-07e910677495"/>
+				<textFieldExpression><![CDATA[$F{pengunjung_nis}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="243" y="1" width="200" height="20" uuid="7c982496-2c19-4388-bab8-a8ef50d5c7b6"/>
+				<textFieldExpression><![CDATA[$F{pengunjung_nama}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="443" y="1" width="101" height="20" uuid="a431ba5c-ac08-4b58-8894-304e6364aa19"/>
+				<textFieldExpression><![CDATA[$F{pengunjung_kelas}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="78" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="584" y="0" width="175" height="20" uuid="ecc8375a-4b0f-4c41-b99d-2a8d7b92c518"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="544" y="0" width="40" height="20" uuid="0b748f51-1e48-4594-856e-2af6cc0ed95b"/>
+				<text><![CDATA[Jakarta,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="544" y="58" width="173" height="20" uuid="76829fad-95cb-4a18-ad0e-0024cfd2ff3d"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Petugas]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
