@@ -46,6 +46,10 @@ public class FormMasterLaporan extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         jPanelLaporanAnggota = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
+        jPanelLaporanBuku1 = new javax.swing.JPanel();
+        jLabel24 = new javax.swing.JLabel();
+        jPanelLaporanAnggota1 = new javax.swing.JPanel();
+        jLabel23 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -88,10 +92,10 @@ public class FormMasterLaporan extends javax.swing.JFrame {
         jLabel22.setBackground(new java.awt.Color(71, 127, 255));
         jLabel22.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(198, 95, 225));
-        jLabel22.setText("Laporan Buku Perpustakaan");
-        jPanelLaporanBuku.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, -1, -1));
+        jLabel22.setText("Laporan Data Anggota");
+        jPanelLaporanBuku.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, -1, -1));
 
-        jPanel1.add(jPanelLaporanBuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 190, 330, 100));
+        jPanel1.add(jPanelLaporanBuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 260, 330, 50));
 
         jPanelLaporanAnggota.setBackground(new java.awt.Color(255, 255, 255));
         jPanelLaporanAnggota.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -104,10 +108,42 @@ public class FormMasterLaporan extends javax.swing.JFrame {
         jLabel21.setBackground(new java.awt.Color(255, 255, 255));
         jLabel21.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(198, 95, 225));
-        jLabel21.setText("Laporan Anggota Perpustakaan");
-        jPanelLaporanAnggota.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, -1, -1));
+        jLabel21.setText("Laporan Data Pengunjung");
+        jPanelLaporanAnggota.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, -1, -1));
 
-        jPanel1.add(jPanelLaporanAnggota, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 330, 100));
+        jPanel1.add(jPanelLaporanAnggota, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 200, 330, 50));
+
+        jPanelLaporanBuku1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelLaporanBuku1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanelLaporanBuku1MouseClicked(evt);
+            }
+        });
+        jPanelLaporanBuku1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel24.setBackground(new java.awt.Color(71, 127, 255));
+        jLabel24.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(198, 95, 225));
+        jLabel24.setText("Laporan Data Peminjaman");
+        jPanelLaporanBuku1.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, -1, -1));
+
+        jPanel1.add(jPanelLaporanBuku1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 380, 330, 50));
+
+        jPanelLaporanAnggota1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelLaporanAnggota1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanelLaporanAnggota1MouseClicked(evt);
+            }
+        });
+        jPanelLaporanAnggota1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel23.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel23.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(198, 95, 225));
+        jLabel23.setText("Laporan Data Buku");
+        jPanelLaporanAnggota1.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, -1, -1));
+
+        jPanel1.add(jPanelLaporanAnggota1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 320, 330, 50));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 1000, 560));
 
@@ -171,6 +207,14 @@ public class FormMasterLaporan extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jLabel3MouseClicked
 
+    private void jPanelLaporanAnggota1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelLaporanAnggota1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanelLaporanAnggota1MouseClicked
+
+    private void jPanelLaporanBuku1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelLaporanBuku1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanelLaporanBuku1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -214,10 +258,14 @@ public class FormMasterLaporan extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelLaporanAnggota;
+    private javax.swing.JPanel jPanelLaporanAnggota1;
     private javax.swing.JPanel jPanelLaporanBuku;
+    private javax.swing.JPanel jPanelLaporanBuku1;
     // End of variables declaration//GEN-END:variables
 }
