@@ -5,6 +5,7 @@
  */
 package tampilan;
 import java.sql.*;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -29,6 +30,13 @@ public final class FormPeminjamanBuku extends javax.swing.JFrame {
         initComponents();
         datatable();
         getNextIdTransaksi();
+        
+        java.util.Date date = Calendar.getInstance().getTime();  
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");  
+        String strDate = dateFormat.format(date);  
+        System.out.println("Converted String: " + strDate);  
+        jLabelTgl.setText(strDate);
+        jLabelTgl.setVisible(false);   
     }
 
     protected void kosong(){
@@ -58,10 +66,10 @@ public final class FormPeminjamanBuku extends javax.swing.JFrame {
             ResultSet hasil = stat.executeQuery(sql);
             while(hasil.next()){
                 id_transaksi = hasil.getString("id_transaksi");
-                System.out.println("id anggota terakhir : "+id_transaksi);
+                System.out.println("id transaksi terakhir : "+id_transaksi);
                 lastCharacterId =  id_transaksi.length() > 2 ? id_transaksi.substring(id_transaksi.length() -1) : id_transaksi;
-                System.out.println("id anggota terakhir : "+id_transaksi);
-                System.out.println("ambil 1 karakter terakhir id anggota terakhir : "+lastCharacterId);
+                System.out.println("id transaksi terakhir : "+id_transaksi);
+                System.out.println("ambil 1 karakter terakhir id transaksi terakhir : "+lastCharacterId);
             }
         }catch (SQLException e){
                     
@@ -158,12 +166,25 @@ public final class FormPeminjamanBuku extends javax.swing.JFrame {
         labelNIS = new javax.swing.JLabel();
         labelNoTeleponAnggota = new javax.swing.JLabel();
         buttonSearchAnggota = new javax.swing.JButton();
-        labelKodeBuku15 = new javax.swing.JLabel();
+        jLabelTgl = new javax.swing.JLabel();
         dateChooserTglKembali = new com.toedter.calendar.JDateChooser();
         dateChooserTglPinjam = new com.toedter.calendar.JDateChooser();
-        jPanel3 = new javax.swing.JPanel();
-        exit = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        labelKodeBuku16 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenuLaporan1 = new javax.swing.JMenu();
+        jMenuItemMenuPetugas = new javax.swing.JMenuItem();
+        jMenuItemMenuPengunjung = new javax.swing.JMenuItem();
+        jMenuMaster = new javax.swing.JMenu();
+        jMenuItemInputDataBuku = new javax.swing.JMenuItem();
+        jMenuItemRegistrasiAnggota = new javax.swing.JMenuItem();
+        jMenuItemRegistrasiPetugas = new javax.swing.JMenuItem();
+        jMenuTransaksi = new javax.swing.JMenu();
+        jMenuItemPeminjamanBuku = new javax.swing.JMenuItem();
+        jMenuItemPengembalianBuku = new javax.swing.JMenuItem();
+        jMenuLaporan = new javax.swing.JMenu();
+        jMenuLogout = new javax.swing.JMenu();
+        jMenuItemLogout = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Peminjaman Buku");
@@ -231,7 +252,7 @@ public final class FormPeminjamanBuku extends javax.swing.JFrame {
                 buttonClearActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 540, 90, -1));
+        jPanel1.add(buttonClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 520, 90, -1));
 
         buttonSimpan.setBackground(new java.awt.Color(9, 110, 59));
         buttonSimpan.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
@@ -244,7 +265,7 @@ public final class FormPeminjamanBuku extends javax.swing.JFrame {
                 buttonSimpanActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 540, 90, -1));
+        jPanel1.add(buttonSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 520, 90, -1));
 
         buttonHapus.setBackground(new java.awt.Color(9, 110, 59));
         buttonHapus.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
@@ -257,7 +278,7 @@ public final class FormPeminjamanBuku extends javax.swing.JFrame {
                 buttonHapusActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 540, 80, -1));
+        jPanel1.add(buttonHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 520, 80, -1));
 
         labelKodeBuku3.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
         labelKodeBuku3.setForeground(new java.awt.Color(153, 153, 153));
@@ -268,7 +289,7 @@ public final class FormPeminjamanBuku extends javax.swing.JFrame {
         labelTitle1.setFont(new java.awt.Font("Montserrat SemiBold", 1, 24)); // NOI18N
         labelTitle1.setForeground(new java.awt.Color(9, 110, 59));
         labelTitle1.setText("Transaksi Peminjaman Buku");
-        jPanel1.add(labelTitle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, -1, -1));
+        jPanel1.add(labelTitle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, -1, -1));
 
         panelAnggota1.setBackground(new java.awt.Color(255, 255, 255));
         panelAnggota1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 231, 232)));
@@ -401,31 +422,208 @@ public final class FormPeminjamanBuku extends javax.swing.JFrame {
 
         jPanel1.add(panelAnggota, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 350, 230));
 
-        labelKodeBuku15.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
-        labelKodeBuku15.setForeground(new java.awt.Color(153, 153, 153));
-        labelKodeBuku15.setText("ID Transaksi");
-        jPanel1.add(labelKodeBuku15, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, -1, 20));
+        jLabelTgl.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
+        jLabelTgl.setForeground(new java.awt.Color(153, 153, 153));
+        jLabelTgl.setText("ID Transaksi");
+        jPanel1.add(jLabelTgl, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 10, -1, 20));
         jPanel1.add(dateChooserTglKembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 100, 150, -1));
         jPanel1.add(dateChooserTglPinjam, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 100, 150, -1));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, -60, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 28, -1, 580));
+        labelKodeBuku16.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
+        labelKodeBuku16.setForeground(new java.awt.Color(153, 153, 153));
+        labelKodeBuku16.setText("ID Transaksi");
+        jPanel1.add(labelKodeBuku16, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, -1, 20));
 
-        jPanel3.setBackground(new java.awt.Color(212, 210, 212));
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 570));
 
-        exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tampilan/images/cancel.png"))); // NOI18N
-        exit.addMouseListener(new java.awt.event.MouseAdapter() {
+        jMenuBar1.setBackground(new java.awt.Color(245, 247, 250));
+        jMenuBar1.setPreferredSize(new java.awt.Dimension(76, 40));
+
+        jMenuLaporan1.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuLaporan1.setForeground(new java.awt.Color(51, 51, 51));
+        jMenuLaporan1.setText("Menu");
+        jMenuLaporan1.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
+        jMenuLaporan1.setIconTextGap(20);
+        jMenuLaporan1.setMargin(new java.awt.Insets(2, 20, 2, 20));
+        jMenuLaporan1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                exitMouseClicked(evt);
+                jMenuLaporan1MouseClicked(evt);
             }
         });
-        jPanel3.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 10, -1, -1));
 
-        jLabel1.setBackground(new java.awt.Color(212, 210, 212));
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tampilan/images/bar.png"))); // NOI18N
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jMenuItemMenuPetugas.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItemMenuPetugas.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jMenuItemMenuPetugas.setText("Menu Petugas");
+        jMenuItemMenuPetugas.setPreferredSize(new java.awt.Dimension(280, 30));
+        jMenuItemMenuPetugas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuItemMenuPetugasMouseClicked(evt);
+            }
+        });
+        jMenuItemMenuPetugas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemMenuPetugasActionPerformed(evt);
+            }
+        });
+        jMenuLaporan1.add(jMenuItemMenuPetugas);
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 30));
+        jMenuItemMenuPengunjung.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItemMenuPengunjung.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jMenuItemMenuPengunjung.setText("Menu Pengunjung");
+        jMenuItemMenuPengunjung.setPreferredSize(new java.awt.Dimension(280, 30));
+        jMenuItemMenuPengunjung.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemMenuPengunjungActionPerformed(evt);
+            }
+        });
+        jMenuLaporan1.add(jMenuItemMenuPengunjung);
+
+        jMenuBar1.add(jMenuLaporan1);
+
+        jMenuMaster.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuMaster.setForeground(new java.awt.Color(51, 51, 51));
+        jMenuMaster.setText("Master");
+        jMenuMaster.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
+        jMenuMaster.setIconTextGap(20);
+        jMenuMaster.setMargin(new java.awt.Insets(2, 20, 2, 20));
+
+        jMenuItemInputDataBuku.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItemInputDataBuku.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jMenuItemInputDataBuku.setText("Data Buku");
+        jMenuItemInputDataBuku.setPreferredSize(new java.awt.Dimension(280, 30));
+        jMenuItemInputDataBuku.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuItemInputDataBukuMouseClicked(evt);
+            }
+        });
+        jMenuItemInputDataBuku.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemInputDataBukuActionPerformed(evt);
+            }
+        });
+        jMenuMaster.add(jMenuItemInputDataBuku);
+
+        jMenuItemRegistrasiAnggota.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItemRegistrasiAnggota.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jMenuItemRegistrasiAnggota.setText("Data Anggota");
+        jMenuItemRegistrasiAnggota.setPreferredSize(new java.awt.Dimension(280, 30));
+        jMenuItemRegistrasiAnggota.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuItemRegistrasiAnggotaMouseClicked(evt);
+            }
+        });
+        jMenuItemRegistrasiAnggota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemRegistrasiAnggotaActionPerformed(evt);
+            }
+        });
+        jMenuMaster.add(jMenuItemRegistrasiAnggota);
+
+        jMenuItemRegistrasiPetugas.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItemRegistrasiPetugas.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jMenuItemRegistrasiPetugas.setText("Data Petugas");
+        jMenuItemRegistrasiPetugas.setPreferredSize(new java.awt.Dimension(280, 30));
+        jMenuItemRegistrasiPetugas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuItemRegistrasiPetugasMouseClicked(evt);
+            }
+        });
+        jMenuItemRegistrasiPetugas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemRegistrasiPetugasActionPerformed(evt);
+            }
+        });
+        jMenuMaster.add(jMenuItemRegistrasiPetugas);
+
+        jMenuBar1.add(jMenuMaster);
+
+        jMenuTransaksi.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuTransaksi.setForeground(new java.awt.Color(51, 51, 51));
+        jMenuTransaksi.setText("Transaksi");
+        jMenuTransaksi.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
+        jMenuTransaksi.setIconTextGap(20);
+        jMenuTransaksi.setMargin(new java.awt.Insets(2, 20, 2, 20));
+        jMenuTransaksi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuTransaksiMouseClicked(evt);
+            }
+        });
+        jMenuTransaksi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuTransaksiActionPerformed(evt);
+            }
+        });
+
+        jMenuItemPeminjamanBuku.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItemPeminjamanBuku.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jMenuItemPeminjamanBuku.setText("Peminjaman");
+        jMenuItemPeminjamanBuku.setPreferredSize(new java.awt.Dimension(280, 30));
+        jMenuItemPeminjamanBuku.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuItemPeminjamanBukuMouseClicked(evt);
+            }
+        });
+        jMenuItemPeminjamanBuku.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemPeminjamanBukuActionPerformed(evt);
+            }
+        });
+        jMenuTransaksi.add(jMenuItemPeminjamanBuku);
+
+        jMenuItemPengembalianBuku.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItemPengembalianBuku.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jMenuItemPengembalianBuku.setText("Pengembalian");
+        jMenuItemPengembalianBuku.setPreferredSize(new java.awt.Dimension(280, 30));
+        jMenuItemPengembalianBuku.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemPengembalianBukuActionPerformed(evt);
+            }
+        });
+        jMenuTransaksi.add(jMenuItemPengembalianBuku);
+
+        jMenuBar1.add(jMenuTransaksi);
+
+        jMenuLaporan.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuLaporan.setForeground(new java.awt.Color(51, 51, 51));
+        jMenuLaporan.setText("Laporan");
+        jMenuLaporan.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
+        jMenuLaporan.setIconTextGap(20);
+        jMenuLaporan.setMargin(new java.awt.Insets(2, 20, 2, 20));
+        jMenuLaporan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuLaporanMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenuLaporan);
+
+        jMenuLogout.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuLogout.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jMenuLogout.setForeground(new java.awt.Color(51, 51, 51));
+        jMenuLogout.setText("Exit");
+        jMenuLogout.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
+        jMenuLogout.setIconTextGap(40);
+        jMenuLogout.setMargin(new java.awt.Insets(2, 20, 2, 20));
+        jMenuLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuLogoutActionPerformed(evt);
+            }
+        });
+
+        jMenuItemLogout.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItemLogout.setFont(new java.awt.Font("Montserrat Medium", 0, 14)); // NOI18N
+        jMenuItemLogout.setText("Logout");
+        jMenuItemLogout.setPreferredSize(new java.awt.Dimension(280, 30));
+        jMenuItemLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemLogoutActionPerformed(evt);
+            }
+        });
+        jMenuLogout.add(jMenuItemLogout);
+
+        jMenuBar1.add(jMenuLogout);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
         setLocationRelativeTo(null);
@@ -484,6 +682,7 @@ public final class FormPeminjamanBuku extends javax.swing.JFrame {
 
                     statment.executeUpdate();
                     JOptionPane.showMessageDialog(null, "Stock bertambah 1");
+                    getNextIdTransaksi();
 
                 }catch(SQLException e){
                     JOptionPane.showMessageDialog(null, "Data Gagal bertambah"+e);
@@ -509,63 +708,152 @@ public final class FormPeminjamanBuku extends javax.swing.JFrame {
             "Error",
             javax.swing.JOptionPane.ERROR_MESSAGE);  
         }else{
-            String kodeBuku;
-            int jumlahBuku = Integer.parseInt(labelJumlah.getText());
-            String statusPinjam = "dipinjam";
-            if(jumlahBuku > 0){
-                try{
-                    String sql = "INSERT INTO transaksi VALUES (?,?,?,?,?,?,?,?,?)";
+            try {         
+                String nisPengunjung = labelNIS.getText();
 
-                    PreparedStatement stat = conn.prepareStatement(sql);
-                    stat.setString(1, textfieldIDTransaksi.getText());
-                    stat.setDate(2, new Date(tglPinjam.getTime()));
-                    stat.setDate(3, new Date(tglKembali.getTime()));            
-                    stat.setString(4, textfieldIDAnggota.getText());            
-                    stat.setString(5, labelNama.getText());
-                    stat.setString(6, textfieldKodeBuku.getText()); 
-                    stat.setString(7, labelJudulBuku.getText());
-                    stat.setString(8, "0");
-                    stat.setString(9, statusPinjam);
+                String sqlCek = "SELECT * FROM pengunjung WHERE nis='"+nisPengunjung+"'"
+                        + " AND tgl_kunjungan='"+jLabelTgl.getText()+"'";
 
-                    stat.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Data Transaksi Berhasil Disimpan");
+                java.sql.Statement stat1 = conn.createStatement();
+                ResultSet hasil = stat1.executeQuery(sqlCek);
+                
+                if(hasil.next()){
+                        String kodeBuku;
+                        int jumlahBuku = Integer.parseInt(labelJumlah.getText());
+                        String statusPinjam = "dipinjam";
+                        if(jumlahBuku > 0){
+                            try{
+                                String sql = "INSERT INTO transaksi VALUES (?,?,?,?,?,?,?,?,?)";
 
-                    kodeBuku = textfieldKodeBuku.getText();              
-                    textfieldKodeBuku.requestFocus();
-                    datatable();
+                                PreparedStatement stat = conn.prepareStatement(sql);
+                                stat.setString(1, textfieldIDTransaksi.getText());
+                                stat.setDate(2, new Date(tglPinjam.getTime()));
+                                stat.setDate(3, new Date(tglKembali.getTime()));            
+                                stat.setString(4, textfieldIDAnggota.getText());            
+                                stat.setString(5, labelNama.getText());
+                                stat.setString(6, textfieldKodeBuku.getText()); 
+                                stat.setString(7, labelJudulBuku.getText());
+                                stat.setString(8, "0");
+                                stat.setString(9, statusPinjam);
 
-                    //Jika Transaksi berhasil disimpan, maka stock buku berkurang
-                    try {
-                        System.out.println("Kode buku :"+kodeBuku);
+                                stat.executeUpdate();
+                                JOptionPane.showMessageDialog(null, "Data Transaksi Berhasil Disimpan");
 
-                        String sqlUpdateStock = "UPDATE buku SET jumlah=? where kode_buku='"+kodeBuku+"'";
-                        PreparedStatement statment = conn.prepareStatement(sqlUpdateStock);
-                        System.out.println("Jumlah Buku sebelum : "+jumlahBuku);
+                                kodeBuku = textfieldKodeBuku.getText();              
+                                textfieldKodeBuku.requestFocus();
+                                datatable();
 
-                        int x = jumlahBuku - 1;
-                        String jumlahStockAkhir = Integer.toString(x);
-                        statment.setString(1, jumlahStockAkhir);
-                        System.out.println("Jumlah Buku sesudah : "+x);
+                                //Jika Transaksi berhasil disimpan, maka stock buku berkurang
+                                try {
+                                    System.out.println("Kode buku :"+kodeBuku);
 
-                        statment.executeUpdate();
-                        JOptionPane.showMessageDialog(null, "Stock dikurangi 1");
+                                    String sqlUpdateStock = "UPDATE buku SET jumlah=? where kode_buku='"+kodeBuku+"'";
+                                    PreparedStatement statment = conn.prepareStatement(sqlUpdateStock);
+                                    System.out.println("Jumlah Buku sebelum : "+jumlahBuku);
 
-                    }catch(SQLException e){
-                        JOptionPane.showMessageDialog(null, "Data Gagal dikurangi"+e);
-                    }                   
+                                    int x = jumlahBuku - 1;
+                                    String jumlahStockAkhir = Integer.toString(x);
+                                    statment.setString(1, jumlahStockAkhir);
+                                    System.out.println("Jumlah Buku sesudah : "+x);
 
-                    kosong();  
-                    kosongkanDataAnggota();
-                    kosongkanDataBuku(); 
-                }catch(SQLException e){
-                    JOptionPane.showMessageDialog(null, "Data Gagal Disimpan "+e);
-                }
-            }else{
-               JOptionPane.showMessageDialog(null, "Stock Buku Habis");
-               kosong();  
-               kosongkanDataAnggota();
-               kosongkanDataBuku();
+                                    statment.executeUpdate();
+                                    JOptionPane.showMessageDialog(null, "Stock dikurangi 1");
+
+                                }catch(SQLException e){
+                                    JOptionPane.showMessageDialog(null, "Data Gagal dikurangi"+e);
+                                }                   
+
+                                kosong();  
+                                kosongkanDataAnggota();
+                                kosongkanDataBuku();
+                                getNextIdTransaksi();
+                            }catch(SQLException e){
+                                JOptionPane.showMessageDialog(null, "Data Gagal Disimpan "+e);
+                            }
+                        }else{
+                           JOptionPane.showMessageDialog(null, "Stock Buku Habis");
+                           kosong();  
+                           kosongkanDataAnggota();
+                           kosongkanDataBuku();
+                           getNextIdTransaksi();
+                        }                 
+                }else{
+                        String sqlPengunjung = "INSERT INTO pengunjung (nis, nama, tgl_kunjungan) VALUES (?,?,?)";
+                        try{
+                            PreparedStatement statPengunjung = conn.prepareStatement(sqlPengunjung);
+                            statPengunjung.setString(1, labelNIS.getText());
+                            statPengunjung.setString(2, labelNama.getText());
+                            statPengunjung.setString(3, jLabelTgl.getText());
+                            statPengunjung.executeUpdate();
+                            
+                            String kodeBuku;
+                            int jumlahBuku = Integer.parseInt(labelJumlah.getText());
+                            String statusPinjam = "dipinjam";
+                            if(jumlahBuku > 0){
+                                try{
+                                    String sql = "INSERT INTO transaksi VALUES (?,?,?,?,?,?,?,?,?)";
+
+                                    PreparedStatement stat = conn.prepareStatement(sql);
+                                    stat.setString(1, textfieldIDTransaksi.getText());
+                                    stat.setDate(2, new Date(tglPinjam.getTime()));
+                                    stat.setDate(3, new Date(tglKembali.getTime()));            
+                                    stat.setString(4, textfieldIDAnggota.getText());            
+                                    stat.setString(5, labelNama.getText());
+                                    stat.setString(6, textfieldKodeBuku.getText()); 
+                                    stat.setString(7, labelJudulBuku.getText());
+                                    stat.setString(8, "0");
+                                    stat.setString(9, statusPinjam);
+
+                                    stat.executeUpdate();
+                                    JOptionPane.showMessageDialog(null, "Data Transaksi Berhasil Disimpan");
+
+                                    kodeBuku = textfieldKodeBuku.getText();              
+                                    textfieldKodeBuku.requestFocus();
+                                    datatable();
+
+                                    //Jika Transaksi berhasil disimpan, maka stock buku berkurang
+                                    try {
+                                        System.out.println("Kode buku :"+kodeBuku);
+
+                                        String sqlUpdateStock = "UPDATE buku SET jumlah=? where kode_buku='"+kodeBuku+"'";
+                                        PreparedStatement statment = conn.prepareStatement(sqlUpdateStock);
+                                        System.out.println("Jumlah Buku sebelum : "+jumlahBuku);
+
+                                        int x = jumlahBuku - 1;
+                                        String jumlahStockAkhir = Integer.toString(x);
+                                        statment.setString(1, jumlahStockAkhir);
+                                        System.out.println("Jumlah Buku sesudah : "+x);
+
+                                        statment.executeUpdate();
+                                        JOptionPane.showMessageDialog(null, "Stock dikurangi 1");
+
+                                    }catch(SQLException e){
+                                        JOptionPane.showMessageDialog(null, "Data Gagal dikurangi"+e);
+                                    }                   
+
+                                    kosong();  
+                                    kosongkanDataAnggota();
+                                    kosongkanDataBuku();
+                                    getNextIdTransaksi();
+                                }catch(SQLException e){
+                                    JOptionPane.showMessageDialog(null, "Data Gagal Disimpan "+e);
+                                }
+                            }else{
+                               JOptionPane.showMessageDialog(null, "Stock Buku Habis");
+                               kosong();  
+                               kosongkanDataAnggota();
+                               kosongkanDataBuku();
+                               getNextIdTransaksi();
+                            }  
+                        }catch(SQLException e){
+                            System.out.println("insert ke pengunjung : "+e);
+                        }
+            
+                    }
+            }catch(SQLException e){
+                System.out.println("error cek pengunjung : "+e);
             }
+            
         }
     }//GEN-LAST:event_buttonSimpanActionPerformed
 
@@ -715,12 +1003,111 @@ public final class FormPeminjamanBuku extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_dateChooserTglKembaliPropertyChange
 
-    private void exitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitMouseClicked
+    private void jMenuLaporan1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuLaporan1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuLaporan1MouseClicked
+
+    private void jMenuItemInputDataBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemInputDataBukuActionPerformed
+        // TODO add your handling code here:
+        new FormInputBuku().setVisible(true);
+        this.dispose();
+
+    }//GEN-LAST:event_jMenuItemInputDataBukuActionPerformed
+
+    private void jMenuItemRegistrasiAnggotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistrasiAnggotaActionPerformed
+        // TODO add your handling code here:
+        new FormRegistrasi().setVisible(true);
+        this.dispose();
+
+    }//GEN-LAST:event_jMenuItemRegistrasiAnggotaActionPerformed
+
+    private void jMenuItemRegistrasiPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistrasiPetugasActionPerformed
+        // TODO add your handling code here:
+        new FormPetugas().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItemRegistrasiPetugasActionPerformed
+
+    private void jMenuItemPeminjamanBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPeminjamanBukuActionPerformed
+        // TODO add your handling code here:
+        new FormPeminjamanBuku().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItemPeminjamanBukuActionPerformed
+
+    private void jMenuItemPengembalianBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPengembalianBukuActionPerformed
+        // TODO add your handling code here:
+        new FormPengembalianBuku().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItemPengembalianBukuActionPerformed
+
+    private void jMenuTransaksiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuTransaksiMouseClicked
+        // TODO add your handling code here:
+        new FormPeminjamanBuku().setVisible(true);
+        this.dispose();
+
+    }//GEN-LAST:event_jMenuTransaksiMouseClicked
+
+    private void jMenuTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTransaksiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuTransaksiActionPerformed
+
+    private void jMenuLaporanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuLaporanMouseClicked
+        // TODO add your handling code here:
+        new FormMasterLaporan().setVisible(true);
+        this.dispose();
+
+    }//GEN-LAST:event_jMenuLaporanMouseClicked
+
+    private void jMenuItemLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemLogoutActionPerformed
+        // TODO add your handling code here:
+        new FormLogin().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItemLogoutActionPerformed
+
+    private void jMenuLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuLogoutActionPerformed
+        // TODO add your handling code here:
+        new FormLogin().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuLogoutActionPerformed
+
+    private void jMenuItemMenuPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMenuPetugasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemMenuPetugasActionPerformed
+
+    private void jMenuItemMenuPengunjungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMenuPengunjungActionPerformed
+        // TODO add your handling code here:
+        new FormMenuPengunjung().setVisible(true);
+        this.dispose();        
+    }//GEN-LAST:event_jMenuItemMenuPengunjungActionPerformed
+
+    private void jMenuItemMenuPetugasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItemMenuPetugasMouseClicked
         // TODO add your handling code here:
         new FormMenuUtama().setVisible(true);
         this.dispose();
-   
-    }//GEN-LAST:event_exitMouseClicked
+    }//GEN-LAST:event_jMenuItemMenuPetugasMouseClicked
+
+    private void jMenuItemInputDataBukuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItemInputDataBukuMouseClicked
+        // TODO add your handling code here:
+        new FormInputBuku().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItemInputDataBukuMouseClicked
+
+    private void jMenuItemRegistrasiAnggotaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItemRegistrasiAnggotaMouseClicked
+        // TODO add your handling code here:
+        new FormRegistrasi().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItemRegistrasiAnggotaMouseClicked
+
+    private void jMenuItemRegistrasiPetugasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItemRegistrasiPetugasMouseClicked
+        // TODO add your handling code here:
+        new FormPetugas().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItemRegistrasiPetugasMouseClicked
+
+    private void jMenuItemPeminjamanBukuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItemPeminjamanBukuMouseClicked
+        // TODO add your handling code here:
+        new FormPeminjamanBuku().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItemPeminjamanBukuMouseClicked
 
     /**
      * @param args the command line arguments
@@ -766,10 +1153,23 @@ public final class FormPeminjamanBuku extends javax.swing.JFrame {
     private javax.swing.JButton buttonSimpan;
     private com.toedter.calendar.JDateChooser dateChooserTglKembali;
     private com.toedter.calendar.JDateChooser dateChooserTglPinjam;
-    private javax.swing.JLabel exit;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelTgl;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItemInputDataBuku;
+    private javax.swing.JMenuItem jMenuItemLogout;
+    private javax.swing.JMenuItem jMenuItemMenuPengunjung;
+    private javax.swing.JMenuItem jMenuItemMenuPetugas;
+    private javax.swing.JMenuItem jMenuItemPeminjamanBuku;
+    private javax.swing.JMenuItem jMenuItemPengembalianBuku;
+    private javax.swing.JMenuItem jMenuItemRegistrasiAnggota;
+    private javax.swing.JMenuItem jMenuItemRegistrasiPetugas;
+    private javax.swing.JMenu jMenuLaporan;
+    private javax.swing.JMenu jMenuLaporan1;
+    private javax.swing.JMenu jMenuLogout;
+    private javax.swing.JMenu jMenuMaster;
+    private javax.swing.JMenu jMenuTransaksi;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelJudulBuku;
     private javax.swing.JLabel labelJumlah;
@@ -779,7 +1179,7 @@ public final class FormPeminjamanBuku extends javax.swing.JFrame {
     private javax.swing.JLabel labelKodeBuku12;
     private javax.swing.JLabel labelKodeBuku13;
     private javax.swing.JLabel labelKodeBuku14;
-    private javax.swing.JLabel labelKodeBuku15;
+    private javax.swing.JLabel labelKodeBuku16;
     private javax.swing.JLabel labelKodeBuku2;
     private javax.swing.JLabel labelKodeBuku3;
     private javax.swing.JLabel labelKodeBuku5;

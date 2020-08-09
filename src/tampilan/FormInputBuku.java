@@ -836,55 +836,11 @@ public class FormInputBuku extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_textfieldNamaFileBukuActionPerformed
 
-    private void jMenuItemInputDataBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemInputDataBukuActionPerformed
+    private void jMenuLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuLogoutActionPerformed
         // TODO add your handling code here:
-        new FormInputBuku().setVisible(true);
+        new FormLogin().setVisible(true);
         this.dispose();
-
-    }//GEN-LAST:event_jMenuItemInputDataBukuActionPerformed
-
-    private void jMenuItemRegistrasiAnggotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistrasiAnggotaActionPerformed
-        // TODO add your handling code here:
-        new FormRegistrasi().setVisible(true);
-        this.dispose();
-
-    }//GEN-LAST:event_jMenuItemRegistrasiAnggotaActionPerformed
-
-    private void jMenuItemRegistrasiPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistrasiPetugasActionPerformed
-        // TODO add your handling code here:
-        new FormPetugas().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItemRegistrasiPetugasActionPerformed
-
-    private void jMenuItemPeminjamanBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPeminjamanBukuActionPerformed
-        // TODO add your handling code here:
-        new FormPeminjamanBuku().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItemPeminjamanBukuActionPerformed
-
-    private void jMenuItemPengembalianBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPengembalianBukuActionPerformed
-        // TODO add your handling code here:
-        new FormPengembalianBuku().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItemPengembalianBukuActionPerformed
-
-    private void jMenuTransaksiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuTransaksiMouseClicked
-        // TODO add your handling code here:
-        new FormPeminjamanBuku().setVisible(true);
-        this.dispose();
-
-    }//GEN-LAST:event_jMenuTransaksiMouseClicked
-
-    private void jMenuTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTransaksiActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuTransaksiActionPerformed
-
-    private void jMenuLaporanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuLaporanMouseClicked
-        // TODO add your handling code here:
-        new FormMasterLaporan().setVisible(true);
-        this.dispose();
-
-    }//GEN-LAST:event_jMenuLaporanMouseClicked
+    }//GEN-LAST:event_jMenuLogoutActionPerformed
 
     private void jMenuItemLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemLogoutActionPerformed
         // TODO add your handling code here:
@@ -892,11 +848,51 @@ public class FormInputBuku extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jMenuItemLogoutActionPerformed
 
-    private void jMenuLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuLogoutActionPerformed
+    private void jMenuLaporanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuLaporanMouseClicked
         // TODO add your handling code here:
-        new FormLogin().setVisible(true);
+        new FormMasterLaporan().setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jMenuLogoutActionPerformed
+    }//GEN-LAST:event_jMenuLaporanMouseClicked
+
+    private void jMenuTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTransaksiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuTransaksiActionPerformed
+
+    private void jMenuTransaksiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuTransaksiMouseClicked
+        // TODO add your handling code here:
+        new FormPeminjamanBuku().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuTransaksiMouseClicked
+
+    private void jMenuItemPengembalianBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPengembalianBukuActionPerformed
+        // TODO add your handling code here:
+        new FormPengembalianBuku().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItemPengembalianBukuActionPerformed
+
+    private void jMenuItemPeminjamanBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPeminjamanBukuActionPerformed
+        // TODO add your handling code here:
+        new FormPeminjamanBuku().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItemPeminjamanBukuActionPerformed
+
+    private void jMenuItemRegistrasiPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistrasiPetugasActionPerformed
+        // TODO add your handling code here:
+        new FormPetugas().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItemRegistrasiPetugasActionPerformed
+
+    private void jMenuItemRegistrasiAnggotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistrasiAnggotaActionPerformed
+        // TODO add your handling code here:
+        new FormRegistrasi().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItemRegistrasiAnggotaActionPerformed
+
+    private void jMenuItemInputDataBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemInputDataBukuActionPerformed
+        // TODO add your handling code here:
+        new FormInputBuku().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItemInputDataBukuActionPerformed
 
     /**
      * @param args the command line arguments

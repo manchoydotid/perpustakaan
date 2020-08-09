@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2dbaae96-5e54-4e7b-a2ea-f5ccb6cd90de">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     buku.`kategori_buku` AS buku_kategori_buku,
+     buku.`kode_buku` AS buku_kode_buku,
+     buku.`judul_buku` AS buku_judul_buku,
+     buku.`pengarang` AS buku_pengarang,
+     buku.`penerbit` AS buku_penerbit,
+     buku.`jumlah` AS buku_jumlah
+FROM
+     `buku` buku]]>
+	</queryString>
+	<field name="buku_kategori_buku" class="java.lang.String"/>
+	<field name="buku_kode_buku" class="java.lang.String"/>
+	<field name="buku_judul_buku" class="java.lang.String"/>
+	<field name="buku_pengarang" class="java.lang.String"/>
+	<field name="buku_penerbit" class="java.lang.String"/>
+	<field name="buku_jumlah" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="112" y="0" width="88" height="79" uuid="93fa7762-68d9-484e-b7af-ac7ce02dedb8"/>
+				<imageExpression><![CDATA["C:\\Users\\BrownBox\\Documents\\NetBeansProjects\\Nurmansyah\\src\\tampilan\\images\\logo_mi.gif"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="0" width="802" height="30" uuid="da26eaa3-dca3-4726-b7cf-f89a07aa3930"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MADRASAH IBTIDAIYAH]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="30" width="802" height="30" uuid="608993dc-48b8-4c6d-9885-390f76838412"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ASSA'ADIYAH ATTAHIRIYAH]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="60" width="802" height="19" uuid="ccd2f7ca-814b-4e0a-83c9-18de4fada10c"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Jalan Raya Ciracas No. 7 Ciracas, Jakarta Timur Telp.8702327]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="34" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="133" height="20" uuid="d21ba8c1-268a-4a45-a399-eaec700e12d1"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kode Buku]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="133" y="0" width="133" height="20" uuid="9b1efece-f488-4d11-aafe-550172eb868b"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kategori Buku]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="266" y="0" width="133" height="20" uuid="a2dd45da-26c9-47b0-9e09-e3be900446b1"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Judul Buku]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="0" width="133" height="20" uuid="3626fa3f-44f5-4c92-b071-f2147a1e79e6"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pengarang]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="665" y="0" width="133" height="20" uuid="e44bc8ed-dec5-4c7c-8936-3ffc09c18779"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Jumlah]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="532" y="0" width="133" height="20" uuid="ea6583a6-72af-49fb-a925-4a739f5ce99b"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Penerbit]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="133" height="20" uuid="4383b2e2-5574-4916-b500-e197eeafb246"/>
+				<textFieldExpression><![CDATA[$F{buku_kode_buku}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="133" y="0" width="133" height="20" uuid="c0c93b7e-bd07-4d52-9dc5-f5e83c139915"/>
+				<textFieldExpression><![CDATA[$F{buku_kategori_buku}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="266" y="0" width="133" height="20" uuid="8f591449-f7db-4151-9faf-65021235d848"/>
+				<textFieldExpression><![CDATA[$F{buku_judul_buku}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="399" y="0" width="133" height="20" uuid="2c0983c2-7a2b-4f00-846c-68ce04b06b52"/>
+				<textFieldExpression><![CDATA[$F{buku_pengarang}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="665" y="0" width="133" height="20" uuid="5c356973-e3ce-478e-9cd7-33786ca4674c"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{buku_jumlah}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="532" y="0" width="133" height="20" uuid="0d96090b-de28-4ace-8390-6e405863f7bd"/>
+				<textFieldExpression><![CDATA[$F{buku_penerbit}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

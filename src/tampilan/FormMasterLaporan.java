@@ -8,6 +8,7 @@ package tampilan;
 import java.io.File;
 import java.sql.*;
 import java.util.HashMap;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import koneksi.koneksi;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -27,6 +28,8 @@ public class FormMasterLaporan extends javax.swing.JFrame {
      */
     public FormMasterLaporan() {
         initComponents();
+        Locale locale = new Locale("id", "ID");
+        Locale.setDefault(locale);
     }
 
     /**
@@ -44,7 +47,7 @@ public class FormMasterLaporan extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         jPanelLaporanBuku = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
-        jPanelLaporanAnggota = new javax.swing.JPanel();
+        jPanelLaporanPengunjung = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
         jPanelLaporanBuku1 = new javax.swing.JPanel();
         jLabel24 = new javax.swing.JLabel();
@@ -93,25 +96,25 @@ public class FormMasterLaporan extends javax.swing.JFrame {
         jLabel22.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(198, 95, 225));
         jLabel22.setText("Laporan Data Anggota");
-        jPanelLaporanBuku.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, -1, -1));
+        jPanelLaporanBuku.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, -1, -1));
 
         jPanel1.add(jPanelLaporanBuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 260, 330, 50));
 
-        jPanelLaporanAnggota.setBackground(new java.awt.Color(255, 255, 255));
-        jPanelLaporanAnggota.addMouseListener(new java.awt.event.MouseAdapter() {
+        jPanelLaporanPengunjung.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelLaporanPengunjung.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanelLaporanAnggotaMouseClicked(evt);
+                jPanelLaporanPengunjungMouseClicked(evt);
             }
         });
-        jPanelLaporanAnggota.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanelLaporanPengunjung.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel21.setBackground(new java.awt.Color(255, 255, 255));
         jLabel21.setFont(new java.awt.Font("Montserrat SemiBold", 0, 14)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(198, 95, 225));
         jLabel21.setText("Laporan Data Pengunjung");
-        jPanelLaporanAnggota.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, -1, -1));
+        jPanelLaporanPengunjung.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, -1));
 
-        jPanel1.add(jPanelLaporanAnggota, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 200, 330, 50));
+        jPanel1.add(jPanelLaporanPengunjung, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 200, 330, 50));
 
         jPanelLaporanBuku1.setBackground(new java.awt.Color(255, 255, 255));
         jPanelLaporanBuku1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -168,10 +171,10 @@ public class FormMasterLaporan extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jPanelLaporanAnggotaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelLaporanAnggotaMouseClicked
+    private void jPanelLaporanPengunjungMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelLaporanPengunjungMouseClicked
         // TODO add your handling code here:
         try{
-            String namaFile = "src/laporan/laporanAnggota.jasper";
+            String namaFile = "src/laporan/reportAnggota.jasper";
             Connection conn = new koneksi().connect();
             HashMap parameter = new HashMap();
             File report_file = new File(namaFile);
@@ -183,7 +186,7 @@ public class FormMasterLaporan extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
-    }//GEN-LAST:event_jPanelLaporanAnggotaMouseClicked
+    }//GEN-LAST:event_jPanelLaporanPengunjungMouseClicked
 
     private void jPanelLaporanBukuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelLaporanBukuMouseClicked
         // TODO add your handling code here:
@@ -263,9 +266,9 @@ public class FormMasterLaporan extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanelLaporanAnggota;
     private javax.swing.JPanel jPanelLaporanAnggota1;
     private javax.swing.JPanel jPanelLaporanBuku;
     private javax.swing.JPanel jPanelLaporanBuku1;
+    private javax.swing.JPanel jPanelLaporanPengunjung;
     // End of variables declaration//GEN-END:variables
 }

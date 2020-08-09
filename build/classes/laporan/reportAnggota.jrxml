@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="14cb909a-bf73-4319-b368-6e49b3090f1d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     anggota.`id_anggota` AS anggota_id_anggota,
+     anggota.`nama` AS anggota_nama,
+     anggota.`nis` AS anggota_nis,
+     anggota.`no_tlp` AS anggota_no_tlp
+FROM
+     `anggota` anggota]]>
+	</queryString>
+	<field name="anggota_id_anggota" class="java.lang.String"/>
+	<field name="anggota_nama" class="java.lang.String"/>
+	<field name="anggota_nis" class="java.lang.String"/>
+	<field name="anggota_no_tlp" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="87" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="30" width="802" height="30" forecolor="#096E3B" uuid="db669c2a-9da5-42bc-bb35-1227a906dc97"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ASSA'ADIYAH ATTAHIRIYAH]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="60" width="802" height="19" forecolor="#096E3B" uuid="d1df7df2-0446-49dc-84cc-745d96c2e16c"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Jalan Raya Ciracas No. 7 Ciracas, Jakarta Timur Telp.8702327]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="802" height="30" forecolor="#096E3B" uuid="82423762-9001-41ee-bb18-a423cbda97ae"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MADRASAH IBTIDAIYAH]]></text>
+			</staticText>
+			<image>
+				<reportElement x="122" y="0" width="88" height="79" uuid="1dc71aa0-d960-4ad4-80c7-22fe31cc6ab4"/>
+				<imageExpression><![CDATA["C:\\Users\\BrownBox\\Documents\\NetBeansProjects\\Nurmansyah\\src\\tampilan\\images\\logo_mi.gif"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="0" y="84" width="802" height="2" forecolor="#096E3B" uuid="0284435e-b098-4de9-9605-25bb4dd5a22c"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="55" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="802" height="30" forecolor="#333333" uuid="74ecafc2-791f-477e-9a91-7bf507fd4b86"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Laporan Data Anggota]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="122" y="0" width="78" height="20" uuid="9b00f615-169b-4eed-9fe9-8ff6de53be70"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID Anggota]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="229" height="20" uuid="d51fd0a0-1bd7-4c10-bb71-17ea81a6f834"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nama Anggota]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="429" y="0" width="92" height="20" uuid="e6fb4854-572c-41d5-9942-a4ba2533555c"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NIS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="521" y="0" width="200" height="20" uuid="85f879f2-b298-472f-ad6a-508d27576f0f"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No Telepon]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="122" y="0" width="78" height="20" uuid="56836dc9-d232-4dc7-8016-8dcb0a828cf3"/>
+				<textFieldExpression><![CDATA[$F{anggota_id_anggota}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="229" height="20" uuid="4f70a15b-a8da-447c-9284-2363ef929ac1"/>
+				<textFieldExpression><![CDATA[$F{anggota_nama}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="429" y="0" width="92" height="20" uuid="09474e91-782d-440e-a1a6-cd427b4c5613"/>
+				<textFieldExpression><![CDATA[$F{anggota_nis}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="521" y="0" width="200" height="20" uuid="2eb07587-489d-4232-a3f2-8638d4bcba31"/>
+				<textFieldExpression><![CDATA[$F{anggota_no_tlp}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="77" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="584" y="0" width="175" height="20" uuid="196bbd07-cae8-4e02-8d2a-784e52abc556"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="544" y="0" width="40" height="20" uuid="9d5b6ebb-b0ec-4017-8cfa-2edfd8c738cf"/>
+				<text><![CDATA[Jakarta,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="544" y="57" width="173" height="20" uuid="a9502407-ef2c-455a-addb-8220aaade71f"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Petugas]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

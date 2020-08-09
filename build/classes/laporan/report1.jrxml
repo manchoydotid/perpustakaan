@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c50d1145-2ca2-4278-ab27-996e84e63a6c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     pengunjung.`nis` AS pengunjung_nis,
+     pengunjung.`nama` AS pengunjung_nama,
+     pengunjung.`kelas` AS pengunjung_kelas,
+     pengunjung.`tujuan` AS pengunjung_tujuan,
+     pengunjung.`tgl_kunjungan` AS pengunjung_tgl_kunjungan
+FROM
+     `pengunjung` pengunjung]]>
+	</queryString>
+	<field name="pengunjung_nis" class="java.lang.String"/>
+	<field name="pengunjung_nama" class="java.lang.String"/>
+	<field name="pengunjung_kelas" class="java.lang.String"/>
+	<field name="pengunjung_tujuan" class="java.lang.String"/>
+	<field name="pengunjung_tgl_kunjungan" class="java.sql.Date"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="500" y="17" width="302" height="20" uuid="2c4950b7-a205-4f03-9263-08b75f8b1ece"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("EEEE, dd MMMMM yyyy",new java.util.Locale("id"))]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
